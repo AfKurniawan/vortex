@@ -3,6 +3,7 @@ package com.creativedna.vortex.ui.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.creativedna.vortex.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,16 +14,26 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class LocationActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
+    @Bind(R.id.myLocation_tv)TextView mLocation;
+    private double lat,lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        ButterKnife.bind(this);
         setUpMapIfNeeded();
+
+        Bundle bundle = getIntent().getExtras();
+        lat = bundle.getDouble("lat");
+        lng = bundle.getDouble("lng");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -61,7 +72,7 @@ public class LocationActivity extends AppCompatActivity {
         settings.setMyLocationButtonEnabled(false);
         settings.setZoomControlsEnabled(true);
 
-        LatLng latLng = latLng = new LatLng(-1.2757935, 36.8196439);
+        LatLng latLng = latLng = new LatLng(lat, lng);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)

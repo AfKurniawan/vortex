@@ -174,6 +174,8 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
             public void onClick(View v) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(getBaseContext(), LocationActivity.class);
+                intent.putExtra("lat",lat);
+                intent.putExtra("lng",lng);
                 startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package com.creativedna.vortex.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -25,6 +26,8 @@ public class AllEventsAdapter extends RecyclerView.Adapter<EventItemHolder> impl
     public AllEventsAdapter(ArrayList<Event> events, Context context) {
         this.events = events;
         this.context = context;
+
+        Log.d("ADAPTER SIZE", events.size()+"");
     }
 
     @Override

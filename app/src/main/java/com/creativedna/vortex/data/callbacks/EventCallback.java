@@ -5,7 +5,7 @@ import com.creativedna.vortex.models.Event;
 import java.util.ArrayList;
 
 /**
- * Created by Aron on 10/24/2015.
+ * Created by Bryan Lamtoo - creativeDNA (U) LTD.
  */
 public class EventCallback {
     private int numFound;

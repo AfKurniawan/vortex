@@ -109,6 +109,8 @@ public class TabAllEventsFragment extends Fragment {
                         loadTitle.setVisibility(TextView.GONE);
 
                         Log.d("getting events...", "Completed");
+
+                        Log.d("JSON SIZE",""+events.size());
                     }
 
                     @Override
