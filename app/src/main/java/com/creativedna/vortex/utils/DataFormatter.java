@@ -1,11 +1,9 @@
 package com.creativedna.vortex.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by Bryan Lamtoo - creativeDNA (U) LTD.
@@ -13,8 +11,11 @@ import java.util.TimeZone;
 public class DataFormatter {
 
     public static Date DateFormatter(String date) {
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+//        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        sdf.setTimeZone(TimeZone.getDefault());
 
         Date dateObj = new Date();
         try {
@@ -97,7 +98,7 @@ public class DataFormatter {
         return time;
     }
 
-    public static String formatDate(String rawDate) {
+    public static String  formatDate(String rawDate) {
         String time = "";
 
         Date date = DataFormatter.DateFormatter(rawDate);

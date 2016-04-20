@@ -1,12 +1,22 @@
 package com.creativedna.vortex.ui.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +31,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.library.RippleView;
@@ -39,7 +50,10 @@ import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,11 +63,18 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class LandingPage extends AppCompatActivity {
+public class LandingPage extends AppCompatActivity implements LocationListener {
 
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+    LocationManager locationManager;
+    private double lng;
+    private double lat;
+    private String userAddress;
+    Location location;
+    String provider;
+
     @Bind(R.id.app_bar)
     Toolbar toolbar;
     @Bind(R.id.nav_drawer)
@@ -105,11 +126,13 @@ public class LandingPage extends AppCompatActivity {
     @OnClick(R.id.rvDrawer_send_feedback)
     void goToSendFeedback() {
         //open main intent
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setData(Uri.parse("mailto:"));
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_EMAIL, "bryanlamtoo@gmail.com");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Eventhub feedback");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Vortex feedback");
         intent.putExtra(Intent.EXTRA_TEXT, "Email body");
+
 
         startActivity(Intent.createChooser(intent, "Send Email"));
     }
@@ -158,6 +181,8 @@ public class LandingPage extends AppCompatActivity {
         ImageView ivMyLocation = (ImageView) findViewById(R.id.ivDrawer_header_my_location);
         Picasso.with(this).load(Functions.deriveMyLocationImage(myLocation.latitude, myLocation.longitude)).into(ivMyLocation);
 
+        TextView ivMyAddress = (TextView) findViewById(R.id.ivDrawer_header_my_address);
+        ivMyAddress.setText(userAddress);
     }
 
     public void openSearch() {
@@ -283,8 +308,63 @@ public class LandingPage extends AppCompatActivity {
     }
 
     public LatLng getMyLocation() {
-        myLocation = new LatLng(-1.2987243, 36.786388);
+
+        getUserCurrentLocation();
+
+        myLocation = new LatLng(lat, lng);
         return myLocation;
+    }
+
+    private void getUserCurrentLocation() {
+        //get location service
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Criteria c = new Criteria();
+        //criteria object will select best service based on
+        //Accuracy, power consumption, response, bearing and monetary cost
+        //set false to use best service otherwise it will select the default Sim network
+        //and give the location based on sim network
+        //now it will first check satellite then Internet then Sim network location
+        provider = locationManager.getBestProvider(c, false);
+        //now you have best provider
+        //get location
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        location = locationManager.getLastKnownLocation(provider);
+        if (location != null) {
+            //get latitude and longitude of the location
+            lng = location.getLongitude();
+            lat = location.getLatitude();
+            //display on text view
+
+            getUserCurrentAddress(location);
+        }
+    }
+
+    private void getUserCurrentAddress(Location l) {
+        Geocoder geo = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+        String mylocation;
+        if (Geocoder.isPresent()) {
+            try {
+                List<Address> addresses = geo.getFromLocation(l.getLatitude(), l.getLongitude(), 1);
+                if (addresses != null && addresses.size() > 0) {
+                    Address address = addresses.get(0);
+                    String addressText = String.format("%s, %s, %s",
+                            // If there's a street address, add it
+                            address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
+                            // Locality is usually a city
+                            address.getLocality(),
+                            // The country of the address
+                            address.getCountryName());
+
+//                    mylocation="Lattitude: "+l.getLatitude()+" Longitude: "+l.getLongitude()+"\nAddress: "+addressText;
+                    userAddress = addressText;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -386,6 +466,28 @@ public class LandingPage extends AppCompatActivity {
         NoSQLEntity<Performer> entity = new NoSQLEntity<Performer>("my_artists", event.getId() + "");
         entity.setData(event);
         NoSQL.with(getApplicationContext()).using(Performer.class).save(entity);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //get latitude and longitude of the location
+        lng = location.getLongitude();
+        lat = location.getLatitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
 //    @Override

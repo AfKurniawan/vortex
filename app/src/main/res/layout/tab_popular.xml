@@ -39,7 +39,7 @@
             android:layout_marginTop="0dp"
             android:src="@mipmap/manageartistplaceholder" />
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -54,7 +54,7 @@
             customfontdemo:fontName="@string/font_title_bold" />
 
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -107,7 +107,7 @@
 
         </FrameLayout>
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

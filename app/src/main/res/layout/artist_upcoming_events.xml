@@ -19,7 +19,7 @@
         android:background="@color/primary"
         android:orientation="horizontal">
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"

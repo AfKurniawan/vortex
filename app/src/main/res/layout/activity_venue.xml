@@ -58,7 +58,7 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/venuepageicon" />
 
-                    <me.gilo.eventhub.ui.views.CustomFontTextView
+                    <com.creativedna.vortex.ui.views.CustomFontTextView
                         android:id="@+id/tvActivity_venue_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

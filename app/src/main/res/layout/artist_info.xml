@@ -12,7 +12,7 @@
     android:elevation="8dp"
     android:orientation="vertical">
 
-    <me.gilo.eventhub.ui.views.CustomFontTextView
+    <com.creativedna.vortex.ui.views.CustomFontTextView
         android:id="@+id/tvArtist_info_about_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -10,7 +10,7 @@
     android:layout_marginTop="16dp"
     android:orientation="vertical">
 
-    <me.gilo.eventhub.ui.views.CustomFontTextView
+    <com.creativedna.vortex.ui.views.CustomFontTextView
         android:id="@+id/tickets_title"
         android:layout_width="match_parent"
         android:layout_height="44dp"

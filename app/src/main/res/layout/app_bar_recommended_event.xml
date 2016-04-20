@@ -4,7 +4,7 @@
     xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/background"
+    android:background="@color/colorPrimary"
     android:paddingTop="@dimen/appbar_top_padding"
     android:elevation="8dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
@@ -18,7 +18,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvRecommended_event_title"
@@ -29,7 +29,7 @@
             android:textSize="13dp"
             customfontdemo:fontName="@string/font_bold" />
 
-        <me.gilo.eventhub.ui.views.CustomFontTextView
+        <com.creativedna.vortex.ui.views.CustomFontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"

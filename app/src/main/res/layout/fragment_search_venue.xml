@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="me.gilo.eventhub.ui.fragments.SearchVenueFragment">
+    tools:context=".ui.fragments.SearchVenueFragment">
 
     <TextView
         android:id="@+id/tvSearch_empty"

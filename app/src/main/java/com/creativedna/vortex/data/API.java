@@ -15,7 +15,8 @@ import rx.Observable;
  * Created by Bryan Lamtoo on 04/10/2016.
  */
 public interface API {
-    String BASE_URL = "http://localhost/vortex/index.php/api/";
+    String BASE_URL = "http://192.168.1.240/vortex/index.php/api/";
+//    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
     static int EVENTS_LIMIT = 20;
 
     @GET("events?limit=" + EVENTS_LIMIT)
