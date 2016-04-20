@@ -17,11 +17,11 @@ import rx.Observable;
  */
 public interface API {
 //    String BASE_URL = "http://192.168.1.240/vortex/index.php/api/";
-    String BASE_URL = "http://192.168.1.240/vortex/test/";
-//    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
+//    String BASE_URL = "http://192.168.1.240/vortex/test/";
+    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
     static int EVENTS_LIMIT = 20;
 
-    @GET("index.json")
+    @GET("events?limit="+ EVENTS_LIMIT)
     Observable<EventCallback> getEvents();
 
     @GET("events")
