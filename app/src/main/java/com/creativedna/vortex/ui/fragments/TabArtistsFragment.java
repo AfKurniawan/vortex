@@ -97,7 +97,7 @@ public class TabArtistsFragment extends Fragment {
             }
         });
 
-        favoriteArtists();
+//        favoriteArtists();
 
         return view;
     }
@@ -172,7 +172,7 @@ public class TabArtistsFragment extends Fragment {
 
                             for (int i = 0; i < eventCallback.getTotalEventsFound(); i++) {
                                 events.add(eventCallback.getEvents().get(i));
-                                Log.d("My artist events: ", eventCallback.getEvents().get(i).getName());
+                                Log.d("My artist events: ", eventCallback.getEvents().get(i).getArtist_name());
 
                             }
                             myArtistEventsAdapter.notifyDataSetChanged();

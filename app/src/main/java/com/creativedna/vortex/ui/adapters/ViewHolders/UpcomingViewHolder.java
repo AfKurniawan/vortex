@@ -34,7 +34,7 @@ public class UpcomingViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(final Context context, final Event event) {
-        mUpcomingEventTitle.setText(event.getName());
+        mUpcomingEventTitle.setText(event.getArtist_name());
         mUpcomingEventVenue.setText(event.getVenue().getName());
         mUpcomingEventDate.setText(DataFormatter.formatDate(event.getEventDateLocal()));
         mUpcomingEventlayout.setOnClickListener(new View.OnClickListener() {

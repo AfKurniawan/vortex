@@ -3,6 +3,7 @@ package com.creativedna.vortex.data;
 import com.creativedna.vortex.data.callbacks.EventCallback;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
+import com.creativedna.vortex.models.Category;
 import com.creativedna.vortex.models.Event;
 
 import retrofit2.http.GET;
@@ -16,10 +17,10 @@ import rx.Observable;
  * Created by Bryan Lamtoo on 04/10/2016.
  */
 public interface API {
-//    String BASE_URL = "http://192.168.1.240/vortex/index.php/api/";
+    String BASE_URL = "http://10.0.2.2/vortex/index.php/api/";
 //    String BASE_URL = "http://192.168.1.240/vortex/test/";
-    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
-    static int EVENTS_LIMIT = 20;
+//    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
+      int EVENTS_LIMIT = 20;
 
     @GET("events?limit="+ EVENTS_LIMIT)
     Observable<EventCallback> getEvents();
@@ -35,6 +36,9 @@ public interface API {
 
     @POST("events/{id}")
     Observable<Event> getEvent(@Path("id") int id);
+
+    @GET("categories")
+    Observable<Category> getCategories();
 
     @GET("artists/{id}")
     Observable<Artist> getArtist(@Path("id") int id);

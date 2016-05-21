@@ -4,7 +4,7 @@
     xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
+    android:background="@color/primary"
     android:paddingTop="@dimen/appbar_top_padding"
     android:elevation="8dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"

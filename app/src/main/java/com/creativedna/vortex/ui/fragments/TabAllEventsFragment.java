@@ -98,7 +98,7 @@ public class TabAllEventsFragment extends Fragment {
                 .filter(new Func1<EventCallback, Boolean>() {
                     @Override
                     public Boolean call(EventCallback eventCallback) {
-                        return eventCallback.getLimit() != 0;
+                        return eventCallback.getNumFound() != 0;
                     }
                 })
                 .subscribe(new Subscriber<EventCallback>() {

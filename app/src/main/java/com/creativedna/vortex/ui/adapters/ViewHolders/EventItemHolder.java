@@ -7,6 +7,7 @@ package com.creativedna.vortex.ui.adapters.ViewHolders;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +17,8 @@ import com.colintmiller.simplenosql.NoSQL;
 import com.colintmiller.simplenosql.NoSQLEntity;
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.events.FavoriteEvent;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.Event;
-import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.activities.EventDetailsActivity;
 import com.creativedna.vortex.utils.DataFormatter;
 import com.squareup.picasso.Picasso;
@@ -55,7 +56,7 @@ public class EventItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(final Event event) {
-        eventTitle.setText(event.getName());
+        eventTitle.setText(event.getArtist_name());
         eventCity.setText(event.getVenue().getCity());
         eventDesc.setText(event.getVenue().getName());
         Picasso.with(context).load(event.getImageUrl()).placeholder(R.drawable.placeholder).into(eventImage);
@@ -74,27 +75,27 @@ public class EventItemHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        String performers = "";
+        String artists = "";
 
-        if (event.getPerformers() != null) {
-            for (Performer performer : event.getPerformers()) {
-                performers += performer.getName() + ", ";
+        if (event.getArtists() != null) {
+            for (Artist artist : event.getArtists()) {
+                artists += artist.getName() + ", ";
             }
         }
-
-        if(performers.length() != 0) {
-            performers = performers.trim().substring(0, performers.length() - 1);
+//
+        if(artists.length() != 0) {
+            artists = artists.trim().substring(0, artists.length() - 1);
         }else{
-            performers = "";
+            artists = "";
         }
-
-       // Log.d("performers", performers);
-
-        if(performers.length() != 0) {
-            eventDesc.setText(performers);
+//
+        Log.d("artists", artists);
+//
+        if(artists.length() != 0) {
+            eventDesc.setText(artists);
             eventDesc.setVisibility(View.VISIBLE);
         }else{
-            eventDesc.setText(performers);
+            eventDesc.setText(artists);
             eventDesc.setVisibility(View.GONE);
         }
 

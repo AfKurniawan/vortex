@@ -87,7 +87,7 @@
     <string name="title_activity_upcoming_events">UpcomingEventsActivity</string>
     <string name="title_activity_search">SearchActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_ticket_information">No ticket information at this time</string>
     <string name="no_artist_found">No artist found</string>
@@ -97,4 +97,6 @@
     <string name="no_venues_found">No venuws found</string>
     <string name="no_recommeneded_events">No recommended events at the moment</string>
     <string name="no_recommended_events">No recommended events</string>
+
+    <string name="fb_app_id">242522342791991</string>
 </resources>

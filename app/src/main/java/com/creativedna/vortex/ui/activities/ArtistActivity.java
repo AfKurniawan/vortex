@@ -376,7 +376,7 @@ public class ArtistActivity extends AppCompatActivity {
                     public void onNext(EventCallback eventCallback) {
                         for (int i = 0; i < eventCallback.getEvents().size(); i++) {
                             recommendedEvents.add(eventCallback.getEvents().get(i));
-                            Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
+                            Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
                         }
                         recommendedEventsAdapter.notifyDataSetChanged();
                     }
@@ -410,7 +410,7 @@ public class ArtistActivity extends AppCompatActivity {
                     public void onNext(AutoSuggestSearchResult eventCallback) {
                         for (int i = 0; i < eventCallback.getEvents().size(); i++) {
                             recommendedEvents.add(eventCallback.getEvents().get(i));
-                            Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
+                            Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
                         }
                         recommendedEventsAdapter.notifyDataSetChanged();
                     }

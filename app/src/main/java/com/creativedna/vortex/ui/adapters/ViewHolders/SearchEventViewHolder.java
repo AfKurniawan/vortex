@@ -36,7 +36,7 @@ public class SearchEventViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(final Event event, final Context context) {
-        searchTitle.setText(event.getName());
+        searchTitle.setText(event.getArtist_name());
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

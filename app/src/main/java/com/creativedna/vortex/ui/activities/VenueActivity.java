@@ -81,7 +81,7 @@ public class VenueActivity extends AppCompatActivity {
         tvName.setText(venue.getName());
         tvAddress.setText(venue.getAddress1());
         tvCityAndState.setText(venue.getCity() + ", " + venue.getState() + ", " + venue.getCountry());
-        tvDistance.setText((float) Math.round(event.getDistance()) + " km");
+        tvDistance.setText((float) Math.round(Double.parseDouble(event.getDistance())) + " km");
 
         Picasso.with(this).load(Functions.deriveVenueImage(venue.getLatitude(), venue.getLongitude())).into(ivMapImage);
     }

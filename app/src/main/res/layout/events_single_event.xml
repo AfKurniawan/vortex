@@ -145,7 +145,7 @@
                     android:paddingRight="0dp"
                     android:paddingTop="0dp"
                     android:text="PM"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#f9b38c"
                     android:textSize="14dp" />
 
             </LinearLayout>
@@ -198,7 +198,7 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="0dp"
-                    android:text="Nairobi"
+                    android:text="Kampala"
                     android:textColor="@color/black" />
 
             </LinearLayout>

@@ -42,9 +42,11 @@ import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Performer;
+import com.creativedna.vortex.models.UserModel;
 import com.creativedna.vortex.ui.adapters.ArtistListAdapter;
 import com.creativedna.vortex.ui.adapters.MainFragmentsAdapter;
 import com.creativedna.vortex.utils.Functions;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.maps.model.LatLng;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
@@ -185,6 +187,39 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
 
         TextView ivMyAddress = (TextView) findViewById(R.id.ivDrawer_header_my_address);
         ivMyAddress.setText(userAddress);
+
+        UserModel userModel = getUserModelFromIntent();
+        if(userModel!=null)
+            setDataOnNavigationView(userModel);
+    }
+
+    private void setDataOnNavigationView(UserModel userModel) {
+        if (mDrawerLayout != null) {
+            setupDrawerContent(userModel);
+        }
+
+
+    }
+
+    private void setupDrawerContent(UserModel userModel) {
+
+        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById( R.id.user_imageview);
+        if(!userModel.profilePic.equalsIgnoreCase(""))
+        simpleDraweeView.setImageURI(Uri.parse(userModel.profilePic));
+
+
+        TextView nameTextView = (TextView) findViewById( R.id.name_textview);
+        nameTextView.setText(userModel.userName);
+
+        TextView emailTextView = (TextView) findViewById( R.id.email_textview);
+        emailTextView.setText(userModel.userEmail);
+    }
+
+
+    private UserModel getUserModelFromIntent()
+    {
+        Intent intent = getIntent();
+        return intent.getParcelableExtra(UserModel.class.getSimpleName());
     }
 
     public void openSearch() {

@@ -16,12 +16,12 @@ public class TestData {
         for (int i = 0; i < 10; i++) {
             Artist artist = new Artist();
             artist.setName("Nicki");
-            artist.setId(i);
+            artist.setId(i+"");
             artist.setDescription("Boss lady");
-            artist.setDescription_source("New yotk times");
-            artist.setDiscovery(15.15);
-            artist.setFamiliarity(10.024);
-            artist.setHotttnesss(10.00);
+            artist.setDescriptionSource("New yotk times");
+//            artist.setDiscovery(15.15);
+//            artist.setFamiliarity(10.024);
+//            artist.setHotttnesss(10.00);
             artists.add(artist);
         }
         return artists;

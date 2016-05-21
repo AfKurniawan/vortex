@@ -30,7 +30,6 @@ import com.creativedna.vortex.events.FavoriteEvent;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Event;
-import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.models.Venue;
 import com.creativedna.vortex.ui.adapters.RecommendedEventsInAdapter;
 import com.creativedna.vortex.utils.DataFormatter;
@@ -148,7 +147,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         if (event != null) {
-            collapsingToolbarLayout.setTitle(event.getName());
+            collapsingToolbarLayout.setTitle(event.getArtist_name());
         }
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         // toolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -170,7 +169,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), RecommendedEventActivity.class);
 
                 if (event != null) {
-                    intent.putExtra("event", event.getName());
+                    intent.putExtra("event", event.getArtist_name());
                 }
                 startActivity(intent);
             }
@@ -224,7 +223,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             tvAddress.setVisibility(View.GONE);
         }
         tvCityAndState.setText(venue.getCity() + ", " + venue.getState() + ", " + venue.getCountry());
-        tvDistance.setText((float) Math.round(event.getDistance()) + " km");
+        tvDistance.setText((float) Math.round(Double.parseDouble(event.getDistance())) + " km");
 
         tvVenuePge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,37 +244,38 @@ public class EventDetailsActivity extends AppCompatActivity {
         LinearLayout llPerformers = (LinearLayout) findViewById(R.id.llEvent_details_performers_layout);
         LinearLayout llPerformer = (LinearLayout) findViewById(R.id.llEvent_details_performer_layout);
 
-        if (event.getPerformers() != null) {
-            if (event.getPerformers().size() == 1) {
+        if (event.getArtists() != null) {
+            if (event.getArtists().size() == 1) {
                 llPerformer.setVisibility(View.VISIBLE);
                 CircularImageView civPerformerPic = (CircularImageView) findViewById(R.id.civEvent_details_performer_image);
                 TextView tvSingleArtistName = (TextView) findViewById(R.id.tvEvent_details_performer_name);
                 TextView tvArtistDescription = (TextView) findViewById(R.id.tvEvent_details_performer_description);
 
-                Performer performer = event.getPerformers().get(0);
-                if (performer.getImages() != null) {
-                    if (performer.getImages().get(0) != null) {
-                        Picasso.with(this).load(performer.getImages().get(0).getUrl()).into(civPerformerPic);
+                Artist artist = event.getArtists().get(0);
+                if (artist.getImages() != null) {
+                    if (artist.getImages().get(0) != null) {
+                        Picasso.with(this).load(artist.getImages().get(0).getUrl()).into(civPerformerPic);
                     }
                 }
 
-                tvSingleArtistName.setText(performer.getName());
-                // tvSingleArtistName.setText(performer.get); //will do description from artist object
-                getArtist(performer.getId(), tvSingleArtistName, tvArtistDescription, civPerformerPic);
+                tvSingleArtistName.setText(artist.getName());
+                // tvSingleArtistName.setText(artist.get); //will do description from artist object
+                getArtist(Integer.parseInt(artist.getId()), tvSingleArtistName, tvArtistDescription,
+                        civPerformerPic);
 
             } else {
                 llPerformer.setVisibility(View.GONE);
-                for (Performer performer : event.getPerformers()) {
+                for (Artist artist : event.getArtists()) {
                     View view = mInflater.inflate(R.layout.event_details_performers_single_performer, null);
                     CircularImageView civArtistPic = (CircularImageView) view.findViewById(R.id.civEvent_details_performers_single_performer_image);
                     TextView tvArtistName = (TextView) view.findViewById(R.id.tvEvent_details_performers_single_performer_name);
-                    if (performer.getImages() != null) {
-                        if (performer.getImages().get(0) != null) {
-                            Picasso.with(this).load(performer.getImages().get(0).getUrl()).into(civArtistPic);
+                    if (artist.getImages() != null) {
+                        if (artist.getImages().get(0) != null) {
+                            Picasso.with(this).load(artist.getImages().get(0).getUrl()).into(civArtistPic);
                         }
                     }
-                    getArtist(performer.getId(), tvArtistName, civArtistPic);
-                    tvArtistName.setText(performer.getName());
+                    getArtist(Integer.parseInt(artist.getId()), tvArtistName, civArtistPic);
+                    tvArtistName.setText(artist.getName());
                     llPerformers.addView(view);
                 }
             }
@@ -390,15 +390,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpHeader() {
-        tvEventName.setText(event.getName());
-        String performers = "";
+        tvEventName.setText(event.getArtist_name());
+        String artists = "";
 
-        if (event.getPerformers() != null) {
-            for (Performer performer : event.getPerformers()) {
-                performers += performer.getName() + ", ";
+        if (event.getArtists() != null) {
+            for (Artist artist : event.getArtists()) {
+                artists += artist.getName() + ", ";
             }
         }
-        tvEventPerformers.setText(performers);
+        tvEventPerformers.setText(artists);
 
         Picasso.with(this).load(event.getImageUrl()).into(ivEventImage);
     }
@@ -440,7 +440,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
         if (id == R.id.event_share) {
             String body = "Check out "
-                    + event.getName()
+                    + event.getArtist_name()
                     + " on "
                     + DataFormatter.formatDate(event.getEventDateLocal())
                     + " "
@@ -473,15 +473,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         recommendedEventsAdapter = new RecommendedEventsInAdapter(recommendedEvents, getApplicationContext());
         mRecommendedRecyclerList.setAdapter(recommendedEventsAdapter);
         if (event != null) {
-            Log.d("Recommended name", event.getName());
+            Log.d("Recommended name", event.getArtist_name());
             getRecommendEvents();
         }
         showMoreRecommendedEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EventDetailsActivity.this, RecommendedEventActivity.class);
-                if (event.getName() != null) {
-                    intent.putExtra("eventName", event.getName());
+                if (event.getArtist_name() != null) {
+                    intent.putExtra("eventName", event.getArtist_name());
                 }
                 startActivity(intent);
             }
@@ -493,7 +493,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         mRecommendedRecyclerList.setVisibility(RecyclerView.VISIBLE);
         emptyRecommendedEventsIndicator.setVisibility(TextView.GONE);
         API api = RetrofitAdapter.createAPI();
-        Observable<AutoSuggestSearchResult> events = api.autoSuggestEvent(event.getName());
+        Observable<AutoSuggestSearchResult> events = api.autoSuggestEvent(event.getArtist_name());
         events.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.newThread())
                 .distinct().
@@ -525,13 +525,13 @@ public class EventDetailsActivity extends AppCompatActivity {
                         } else if (eventCallback.getTotalEventsFound() == 2) {
                             for (int i = 0; i < 2; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
-                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
+                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
                             }
 
                         } else if (eventCallback.getTotalEventsFound() >= 3) {
                             for (int i = 0; i < 3; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
-                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
+                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
                             }
                             moreRecommendedEvents = true;
                             showMoreRecommendedEvents.setVisibility(LinearLayout.VISIBLE);
@@ -561,7 +561,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void getEvent() {
-        int id = event.getId();
+        int id = Integer.parseInt(event.getId());
         API api = RetrofitAdapter.createAPI();
         Observable<Event> events = api.getEvent(id);
         events.observeOn(AndroidSchedulers.mainThread()).
@@ -581,8 +581,8 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Event eventt) {
-                        ticketUrl = event.getTicketUrls().getUrl();
-                        ticketSite.setText(eventt.getTicketUrls().getSource());
+//                        ticketUrl = event.getTicketUrls().getUrl();
+//                        ticketSite.setText(eventt.getTicketUrls().getSource());
                     }
                 });
         ticketlayout.setOnClickListener(new View.OnClickListener() {

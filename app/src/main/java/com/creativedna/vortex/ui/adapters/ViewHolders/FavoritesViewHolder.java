@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creativedna.vortex.R;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.Event;
-import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.activities.EventDetailsActivity;
 import com.creativedna.vortex.ui.fragments.TabFavoritesFragment;
 import com.creativedna.vortex.utils.DataFormatter;
@@ -50,7 +50,7 @@ public class FavoritesViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(@NonNull final Event event, final Context context, final TabFavoritesFragment favoriteEventListener) {
-        eventTitle.setText(event.getName());
+        eventTitle.setText(event.getArtist_name());
         eventDesc.setText(event.getVenue().getName());
         Picasso.with(context).load(event.getImageUrl()).placeholder(R.drawable.placeholder).into(eventImage);
         eventTime.setText(event.getEventDateLocal());
@@ -70,8 +70,8 @@ public class FavoritesViewHolder extends RecyclerView.ViewHolder {
 
         String performers = "";
 
-        if (event.getPerformers() != null) {
-            for (Performer performer : event.getPerformers()) {
+        if (event.getArtists() != null) {
+            for (Artist performer : event.getArtists()) {
                 performers += performer.getName() + ", ";
             }
         }
