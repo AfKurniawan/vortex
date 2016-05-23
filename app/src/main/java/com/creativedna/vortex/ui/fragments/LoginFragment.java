@@ -112,6 +112,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
     }
 
     private void setup() {
+
         GooglePlusSignInHelper.setClientID(AppConstants.GOOGLE_CLIENT_ID);
         gSignInHelper = GooglePlusSignInHelper.getInstance();
         gSignInHelper.initialize(getActivity(), this);
@@ -299,7 +300,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
 
                 }
                 Log.i(TAG,result);
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
             }
         }
 
