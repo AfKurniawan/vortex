@@ -10,6 +10,7 @@ import java.util.List;
 public class Artist implements Serializable {
 
     private String id;
+    private String artist_name;
     private String name;
     private String description;
     private String descriptionSource;
@@ -44,8 +45,8 @@ public class Artist implements Serializable {
      * @return
      * The name
      */
-    public String getName() {
-        return name;
+    public String getArtist_name() {
+        return artist_name;
     }
 
     /**
@@ -53,8 +54,8 @@ public class Artist implements Serializable {
      * @param name
      * The name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setArtist_name(String name) {
+        this.artist_name = name;
     }
 
     /**
@@ -168,6 +169,14 @@ public class Artist implements Serializable {
 
     public void setIs_favorite(boolean is_favorite) {
         this.is_favorite = is_favorite;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 //    public double getFamiliarity() {

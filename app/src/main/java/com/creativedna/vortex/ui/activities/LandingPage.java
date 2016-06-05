@@ -34,19 +34,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andexert.library.RippleView;
 import com.colintmiller.simplenosql.NoSQL;
 import com.colintmiller.simplenosql.NoSQLEntity;
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
+import com.creativedna.vortex.helpers.SharedPreferenceManager;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.models.UserModel;
 import com.creativedna.vortex.ui.adapters.ArtistListAdapter;
 import com.creativedna.vortex.ui.adapters.MainFragmentsAdapter;
 import com.creativedna.vortex.utils.Functions;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.creativedna.vortex.utils.Util;
 import com.google.android.gms.maps.model.LatLng;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
@@ -60,6 +61,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -88,7 +90,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
     @Bind(R.id.progressBar2)
     ProgressBar searchProgressbar;
     ArtistListAdapter artistListAdapter;
-    ArrayList<Performer> performers;
+    ArrayList<Artist> performers;
     @Bind(R.id.psApp_bar_search)
     SearchBox sbSearch;
     @Bind(R.id.vActivity_landing_page_dark_overlay)
@@ -120,7 +122,15 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
         startActivity(new Intent(getBaseContext(), NotificationsActivity.class));
     }
 
-    @OnClick(R.id.rvDrawer_manage_artist)
+    @OnClick(R.id.rvDrawer_logout)
+    void logout() {
+        SharedPreferenceManager.getSharedInstance().clearAllPreferences();
+        Toast.makeText(LandingPage.this, "You've been logged out", Toast.LENGTH_SHORT).show();
+       startActivity(new Intent(this,LoginActivity.class));
+    }
+
+    //    @Bind(R.id.rvDrawer_manage_artist)RippleView mManageArtists;
+//    @OnClick(R.id.rvDrawer_manage_artist)
     void goToManageArtists() {
         startActivity(new Intent(getBaseContext(), ManageMyArtistActivity.class));
     }
@@ -144,6 +154,11 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
         startActivity(new Intent(getBaseContext(), Settings2Activity.class));
     }
 
+    @OnClick(R.id.rvDrawer_categories)
+    void showCategories() {
+        startActivity(new Intent(LandingPage.this, CategoriesActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,8 +172,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
         prepareViews();
         setupTabs();
 
-        myLocation = getMyLocation(); //eventually pick from device
-
+        myLocation = getMyLocation(); //retrieve my location
         mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
 
         if (savedInstanceState != null) {
@@ -168,28 +182,30 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
 
         setUpNavDrawer();
 
-        RippleView rvManageArtist = (RippleView) findViewById(R.id.rvDrawer_manage_artist);
+
 
         FrameLayout flMap = (FrameLayout) findViewById(R.id.flDrawer_map);
+        assert flMap != null;
         flMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(getBaseContext(), LocationActivity.class);
-                intent.putExtra("lat",lat);
-                intent.putExtra("lng",lng);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
                 startActivity(intent);
             }
         });
 
         ImageView ivMyLocation = (ImageView) findViewById(R.id.ivDrawer_header_my_location);
+        if (Util.isOnline(this))
         Picasso.with(this).load(Functions.deriveMyLocationImage(myLocation.latitude, myLocation.longitude)).into(ivMyLocation);
 
         TextView ivMyAddress = (TextView) findViewById(R.id.ivDrawer_header_my_address);
         ivMyAddress.setText(userAddress);
 
         UserModel userModel = getUserModelFromIntent();
-        if(userModel!=null)
+        if (userModel != null)
             setDataOnNavigationView(userModel);
     }
 
@@ -203,23 +219,30 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
 
     private void setupDrawerContent(UserModel userModel) {
 
-        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById( R.id.user_imageview);
-        if(!userModel.profilePic.equalsIgnoreCase(""))
-        simpleDraweeView.setImageURI(Uri.parse(userModel.profilePic));
+        CircleImageView imageView = (CircleImageView) findViewById(R.id.user_imageview);
+        if (!userModel.profilePic.equalsIgnoreCase(""))
+            Picasso.with(this).load(userModel.profilePic)
+            .into(imageView);
+//            imageView.setImageURI(Uri.parse(userModel.profilePic));
+        else {
+            assert imageView != null;
+            imageView.setImageDrawable(this.getResources().getDrawable(R.drawable.profile));
+
+        }
 
 
-        TextView nameTextView = (TextView) findViewById( R.id.name_textview);
+        TextView nameTextView = (TextView) findViewById(R.id.name_textview);
         nameTextView.setText(userModel.userName);
 
-        TextView emailTextView = (TextView) findViewById( R.id.email_textview);
+        TextView emailTextView = (TextView) findViewById(R.id.email_textview);
         emailTextView.setText(userModel.userEmail);
     }
 
 
-    private UserModel getUserModelFromIntent()
-    {
-        Intent intent = getIntent();
-        return intent.getParcelableExtra(UserModel.class.getSimpleName());
+    private UserModel getUserModelFromIntent() {
+//        Intent intent = getIntent();
+//        return intent.getParcelableExtra(UserModel.class.getSimpleName());
+        return SharedPreferenceManager.getSharedInstance().getUserModelFromPreferences();
     }
 
     public void openSearch() {
@@ -328,11 +351,11 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
 
                     @Override
                     public void onNext(AutoSuggestSearchResult result) {
-                        performers = result.getPerformers();
+                        performers = result.getArtists();
                         if (!previous_term.equals(searchTerm)) {
                             //sbSearch.clearResults();
 
-                            for (Performer performer : performers) {
+                            for (Artist performer : performers) {
                                 SearchResult option = new SearchResult(performer.getName(), getResources().getDrawable(
                                         R.drawable.ic_history));
                                 sbSearch.addSearchable(option);
@@ -345,9 +368,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
     }
 
     public LatLng getMyLocation() {
-
         getUserCurrentLocation();
-
         myLocation = new LatLng(lat, lng);
         return myLocation;
     }
@@ -455,7 +476,11 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
             sbSearch.revealFromMenuItem(id, this);
             vDarkOverlay.setVisibility(View.VISIBLE);
             return true;
+        }else if(id==R.id.mnEvents_notifications){
+            goToNotifications();
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

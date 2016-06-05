@@ -1,6 +1,8 @@
 package com.creativedna.vortex.data;
 
 
+import com.creativedna.vortex.constants.AppConstants;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -30,7 +32,7 @@ public class RetrofitAdapter {
 //        okHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API.BASE_URL)
+                .baseUrl(AppConstants.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.activities.SearchActivity;
@@ -40,7 +41,7 @@ public class SearchArtistFragment extends android.support.v4.app.Fragment {
     @Bind(R.id.progressBar3)
     ProgressBar searchProgress;
     SearchArtistAdapter searchArtistAdapter;
-    private ArrayList<Performer> performers;
+    private ArrayList<Artist> performers;
     private String searchTerm;
 
     public SearchArtistFragment() {
@@ -83,12 +84,12 @@ public class SearchArtistFragment extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onNext(AutoSuggestSearchResult autoSuggestSearchResult) {
-                        if (autoSuggestSearchResult.getTotalPerformersFound() == 0) {
+                        if (autoSuggestSearchResult.getTotalArtistsFound() == 0) {
                             searchProgress.setVisibility(ProgressBar.GONE);
                             textEmpty.setVisibility(TextView.VISIBLE);
                             artistSearchList.setVisibility(RecyclerView.GONE);
                         } else {
-                            performers = autoSuggestSearchResult.getPerformers();
+                            performers = autoSuggestSearchResult.getArtists();
                             artistSearchList.setVisibility(RecyclerView.VISIBLE);
                             // searchArtistAdapter.notifyDataSetChanged();
                             searchProgress.setVisibility(ProgressBar.GONE);

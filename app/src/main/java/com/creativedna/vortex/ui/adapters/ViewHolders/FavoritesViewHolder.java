@@ -50,7 +50,7 @@ public class FavoritesViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(@NonNull final Event event, final Context context, final TabFavoritesFragment favoriteEventListener) {
-        eventTitle.setText(event.getArtist_name());
+        eventTitle.setText(event.getName());
         eventDesc.setText(event.getVenue().getName());
         Picasso.with(context).load(event.getImageUrl()).placeholder(R.drawable.placeholder).into(eventImage);
         eventTime.setText(event.getEventDateLocal());
@@ -72,7 +72,7 @@ public class FavoritesViewHolder extends RecyclerView.ViewHolder {
 
         if (event.getArtists() != null) {
             for (Artist performer : event.getArtists()) {
-                performers += performer.getName() + ", ";
+                performers += performer.getArtist_name() + ", ";
             }
         }
         eventDesc.setText(performers);

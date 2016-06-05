@@ -107,7 +107,7 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingTop="0dp"
-                    android:text="Nairobi, Kenya"
+                    android:text="Kampala, Uganda"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />

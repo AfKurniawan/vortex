@@ -24,4 +24,5 @@
     <dimen name="action_bar_height">64dp</dimen>
     <dimen name="toolbar_left_margin">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="profileImageSize">100dp</dimen>
 </resources>

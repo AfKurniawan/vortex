@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.colintmiller.simplenosql.NoSQL;
 import com.colintmiller.simplenosql.NoSQLEntity;
 import com.creativedna.vortex.R;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.activities.ArtistActivity;
 
@@ -33,7 +34,7 @@ public class SearchArtistViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void renderView(final Performer performers, final Context context) {
+    public void renderView(final Artist performers, final Context context) {
         searchTitle.setText(performers.getName());
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -45,9 +46,9 @@ public class SearchArtistViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        if (performers.getEventCount() > 0) {
+//        if (performers.getEventCount() > 0) {
             searchWithShow.setVisibility(ImageView.VISIBLE);
-        }
+//        }
 
         // favoriteImage.setImageDrawable(context.getResources().getDrawable(R.drawable.starred_star));
         favoriteImage.setOnClickListener(new View.OnClickListener() {
@@ -74,13 +75,13 @@ public class SearchArtistViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void favorite(Performer performer, Context context) {
-        NoSQLEntity<Performer> entity = new NoSQLEntity<Performer>("my_artists", performer.getId() + "");
+    public void favorite(Artist performer, Context context) {
+        NoSQLEntity<Artist> entity = new NoSQLEntity<Artist>("my_artists", performer.getId() + "");
         entity.setData(performer);
-        NoSQL.with(context).using(Performer.class).save(entity);
+        NoSQL.with(context).using(Artist.class).save(entity);
     }
 
-    public void unfavorite(Performer performers, Context context) {
+    public void unfavorite(Artist performers, Context context) {
         NoSQL.with(context).using(Performer.class)
                 .bucketId("my_artists")
                 .entityId(performers.getId() + "")

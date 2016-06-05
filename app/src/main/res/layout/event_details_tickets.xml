@@ -31,24 +31,61 @@
         android:textSize="20dp"
         customfontdemo:fontName="@string/font_title" />
 
-    <TextView
-        android:id="@+id/tvEvent_details_ticket_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_below="@+id/tickets_title"
-        android:layout_gravity="top"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:background="#ffffff"
-        android:paddingBottom="16dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="16dp"
-        android:text="@string/no_ticket_information"
-        android:textColor="@color/black" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvEvent_details_ticket_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:background="#ffffff"
+            android:paddingBottom="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="16dp"
+            android:text="@string/no_ticket_information"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvRecommendation_empty_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/no_recommended_events"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTicketsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:maxHeight="180dp"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pbTicketsProgress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+
 
 
     <TextView
@@ -69,7 +106,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="24dp"
-        android:text="Kshs. 1,500"
+        android:text="Ushs. 60,000"
         android:textColor="@color/black" />
 
 

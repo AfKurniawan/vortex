@@ -37,7 +37,7 @@ public class RecommendedViewHolder extends RecyclerView.ViewHolder {
 
     public void renderView(final Context context, final Event event) {
         Picasso.with(context).load(event.getImageUrl()).placeholder(R.drawable.placeholderartist_small).into(mRecommendedEventImage);
-        mRecommendedEventTitle.setText(event.getArtist_name());
+        mRecommendedEventTitle.setText(event.getName());
         String time = DataFormatter.formatDate(event.getEventDateLocal());
         mRecommendedEventTime.setText(time);
         mRecommendedEventLayout.setOnClickListener(new View.OnClickListener() {

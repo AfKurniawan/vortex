@@ -58,7 +58,7 @@ public class ArtistViewHolder extends RecyclerView.ViewHolder {
 
 
         ivWithShows.setVisibility(View.GONE);
-        tvName.setText(artist.getName());
+        tvName.setText(artist.getArtist_name());
 
     }
 }

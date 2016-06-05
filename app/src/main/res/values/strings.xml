@@ -99,4 +99,6 @@
     <string name="no_recommended_events">No recommended events</string>
 
     <string name="fb_app_id">242522342791991</string>
+    <string name="categories">Categories</string>
+    <string name="title_activity_notifications">Notifications</string>
 </resources>

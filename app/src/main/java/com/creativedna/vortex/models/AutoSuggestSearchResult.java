@@ -7,30 +7,30 @@ import java.util.ArrayList;
  */
 public class AutoSuggestSearchResult
 {
-    private ArrayList<Performer> performers;
+    private ArrayList<Artist> Artists;
     private ArrayList<Event> events;
     private ArrayList<Venue> venues;
-    private boolean performerExpansion;
+    private boolean ArtistExpansion;
     private boolean eventExpansion;
     private boolean venueExpansion;
-    private int totalPerformersFound;
+    private int totalArtistsFound;
     private int totalVenuesFound;
     private int totalEventsFound;
 
-    public ArrayList<Performer> getPerformers() {
-        return performers;
+    public ArrayList<Artist> getArtists() {
+        return Artists;
     }
 
-    public void setPerformers(ArrayList<Performer> performers) {
-        this.performers = performers;
+    public void setArtists(ArrayList<Artist> Artists) {
+        this.Artists = Artists;
     }
 
-    public boolean isPerformerExpansion() {
-        return performerExpansion;
+    public boolean isArtistExpansion() {
+        return ArtistExpansion;
     }
 
-    public void setPerformerExpansion(boolean performerExpansion) {
-        this.performerExpansion = performerExpansion;
+    public void setArtistExpansion(boolean ArtistExpansion) {
+        this.ArtistExpansion = ArtistExpansion;
     }
 
     public boolean isEventExpansion() {
@@ -65,12 +65,12 @@ public class AutoSuggestSearchResult
         this.venues = venues;
     }
 
-    public int getTotalPerformersFound() {
-        return totalPerformersFound;
+    public int getTotalArtistsFound() {
+        return totalArtistsFound;
     }
 
-    public void setTotalPerformersFound(int totalPerformersFound) {
-        this.totalPerformersFound = totalPerformersFound;
+    public void setTotalArtistsFound(int totalArtistsFound) {
+        this.totalArtistsFound = totalArtistsFound;
     }
 
     public boolean isVenueExpansion() {

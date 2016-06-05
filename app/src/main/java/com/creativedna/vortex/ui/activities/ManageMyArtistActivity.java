@@ -25,7 +25,6 @@ import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
-import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.adapters.ArtistListAdapter;
 import com.creativedna.vortex.utils.DividerDecoration;
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -59,7 +58,7 @@ public class ManageMyArtistActivity extends AppCompatActivity {
     @Bind(R.id.switch1)
     Switch artistWithventsSwitch;
     ArtistListAdapter artistListAdapter;
-    ArrayList<Performer> performers;
+    ArrayList<Artist> performers;
     SearchBox sbSearch;
     @Bind(R.id.vActivity_landing_page_dark_overlay)
     View vDarkOverlay;
@@ -174,10 +173,10 @@ public class ManageMyArtistActivity extends AppCompatActivity {
             @Override
             public void onResultClick(final SearchResult result) {
                 //React to result being clicked
-                Observable<ArrayList<Performer>> searchResultObservable = Observable.just(performers);
-                searchResultObservable.filter(new Func1<ArrayList<Performer>, Boolean>() {
+                Observable<ArrayList<Artist>> searchResultObservable = Observable.just(performers);
+                searchResultObservable.filter(new Func1<ArrayList<Artist>, Boolean>() {
                     @Override
-                    public Boolean call(ArrayList<Performer> performers) {
+                    public Boolean call(ArrayList<Artist> performers) {
                         boolean isTheOne = false;
                         for (int i = 0; i < performers.size(); i++) {
                             isTheOne = performers.get(i).getName().equals(result.title);
@@ -241,11 +240,12 @@ public class ManageMyArtistActivity extends AppCompatActivity {
 
                                @Override
                                public void onNext(AutoSuggestSearchResult result) {
-                                   performers = result.getPerformers();
+                                   performers = result.getArtists();
                                    if (!previous_term.equals(searchTerm)) {
                                        //sbSearch.clearResults();
-                                       for (int i = 0; i < result.getTotalPerformersFound(); i++) {
-                                           option.add(new SearchResult(result.getPerformers().get(i).getName(), getResources().getDrawable(
+                                       for (int i = 0; i < result.getTotalArtistsFound(); i++) {
+                                           option.add(new SearchResult(result.getArtists().get(i).getName
+                                                   (), getResources().getDrawable(
                                                    R.drawable.ic_history)));
                                            // sbSearch.addSearchable(option);
                                            previous_term = searchTerm;
@@ -302,7 +302,7 @@ public class ManageMyArtistActivity extends AppCompatActivity {
 
                             Collections.sort(artists, new Comparator<Artist>() {
                                 public int compare(Artist artist1, Artist artist2) {
-                                    return artist1.getName().compareTo(artist2.getName());
+                                    return artist1.getArtist_name().compareTo(artist2.getArtist_name());
                                 }
                             });
 
@@ -314,10 +314,10 @@ public class ManageMyArtistActivity extends AppCompatActivity {
 
     }
 
-    public void save(Performer event) {
-        NoSQLEntity<Performer> entity = new NoSQLEntity<Performer>("my_artists", event.getId() + "");
+    public void save(Artist event) {
+        NoSQLEntity<Artist> entity = new NoSQLEntity<Artist>("my_artists", event.getId() + "");
         entity.setData(event);
-        NoSQL.with(getApplicationContext()).using(Performer.class).save(entity);
+        NoSQL.with(getApplicationContext()).using(Artist.class).save(entity);
     }
 
 }

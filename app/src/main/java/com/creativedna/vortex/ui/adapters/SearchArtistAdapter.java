@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.creativedna.vortex.R;
+import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.Performer;
 import com.creativedna.vortex.ui.adapters.ViewHolders.SearchArtistViewHolder;
 
@@ -18,10 +19,10 @@ import java.util.ArrayList;
  * Created by Bryan Lamtoo on 04/15/2016.
  */
 public class SearchArtistAdapter extends RecyclerView.Adapter<SearchArtistViewHolder> {
-    private ArrayList<Performer> performers;
+    private ArrayList<Artist> performers;
     private Context context;
 
-    public SearchArtistAdapter(ArrayList<Performer> performers, Context context) {
+    public SearchArtistAdapter(ArrayList<Artist> performers, Context context) {
         this.performers = performers;
         this.context = context;
     }

@@ -99,9 +99,9 @@
         layout="@layout/event_details_tickets"
         />
 
-    <include
-        layout="@layout/event_details_performers"
-        />
+    <!--<include-->
+    <!--layout="@layout/event_details_performers"-->
+<!--/>-->
 
     <include
         layout="@layout/event_details_venue"

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+             xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:visibility="gone">
 
     <LinearLayout
         android:id="@+id/llEventDetails_artists"
@@ -40,13 +41,13 @@
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                customfontdemo:fontName="@string/font_title" />
+                customfontdemo:fontName="@string/font_title"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_marginLeft="16dp"
-                android:background="@color/primary" />
+                android:background="@color/primary"/>
 
             <LinearLayout
                 android:id="@+id/llEvent_details_performers_layout"
@@ -60,7 +61,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider" />
+                android:background="@color/divider"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,7 +78,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/btn_show_more_default"
-                    android:tint="#b1b1b1" />
+                    android:tint="#b1b1b1"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -95,7 +96,7 @@
                     android:paddingTop="0dp"
                     android:text="Show more"
                     android:textColor="#b1b1b1"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -106,6 +107,6 @@
 
     <include layout="@layout/event_details_performer"
 
-        />
+    />
 
 </FrameLayout>

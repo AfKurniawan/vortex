@@ -2,7 +2,6 @@ package com.creativedna.vortex.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -27,7 +26,6 @@ public class AllEventsAdapter extends RecyclerView.Adapter<EventItemHolder> impl
         this.events = events;
         this.context = context;
 
-        Log.d("ADAPTER SIZE", events.size()+"");
     }
 
     @Override
@@ -44,14 +42,14 @@ public class AllEventsAdapter extends RecyclerView.Adapter<EventItemHolder> impl
 
     @Override
     public long getHeaderId(int position) {
-//        String date = DataFormatter.formatDate(events.get(position).getEventDateLocal());
-//        String nextDate;
-//        while (position > events.size()) {
-//            nextDate = DataFormatter.formatDate(events.get(position + 1).getEventDateLocal());
-//            if (date.equals(nextDate)) {
-//                return position;
-//            }
-//        }
+        String date = DataFormatter.formatDate(events.get(position).getEventDateLocal());
+        String nextDate;
+        while (position > events.size()) {
+            nextDate = DataFormatter.formatDate(events.get(position + 1).getEventDateLocal());
+            if (date.equals(nextDate)) {
+                return position;
+            }
+        }
 
         return position;
     }

@@ -30,10 +30,12 @@ import com.creativedna.vortex.events.FavoriteEvent;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Event;
+import com.creativedna.vortex.models.Ticket;
 import com.creativedna.vortex.models.Venue;
 import com.creativedna.vortex.ui.adapters.RecommendedEventsInAdapter;
 import com.creativedna.vortex.utils.DataFormatter;
 import com.creativedna.vortex.utils.Functions;
+import com.creativedna.vortex.utils.Util;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
@@ -55,6 +57,14 @@ public class EventDetailsActivity extends AppCompatActivity {
     @Bind(R.id.pbRecommendedProgress)
     ProgressBar mRecommendedProgress;
 
+    @Bind(R.id.pbTicketsProgress)
+    ProgressBar mTicketsProgress;
+
+    @Bind(R.id.rvTicketsRecycler)
+    RecyclerView mticketsRecyclerList;
+
+    RecommendedEventsInAdapter evnetTicketsAdapter;
+
     @Bind(R.id.rvRecommendedRecycler)
     RecyclerView mRecommendedRecyclerList;
     RecommendedEventsInAdapter recommendedEventsAdapter;
@@ -66,8 +76,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     @Bind(R.id.llEventDetails_recommendations)
     LinearLayout llRecommendations;
 
-    @Bind(R.id.llEventDetails_artists)
-    LinearLayout llArtists;
+//    @Bind(R.id.llEventDetails_artists)
+//    LinearLayout llArtists;
 
     @Bind(R.id.tvActivity_event_details_event_name)
     TextView tvEventName;
@@ -100,6 +110,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     Artist artist;
     ArrayList<Event> recommendedEvents;
     boolean moreRecommendedEvents = false;
+    private ArrayList<Ticket> eventTickets;
 
     @OnClick(R.id.llRecommended_show_more)
     void showMoreRecommendedEvents() {
@@ -125,14 +136,14 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.llEvent_details_performer_layout)
-    void goToArtistPage() {
-        if (artist != null) {
-            Intent intent = new Intent(EventDetailsActivity.this, ArtistActivity.class);
-            intent.putExtra("artist", artist);
-            startActivity(intent);
-        }
-    }
+//    @OnClick(R.id.llEvent_details_performer_layout)
+//    void goToArtistPage() {
+//        if (artist != null) {
+//            Intent intent = new Intent(EventDetailsActivity.this, ArtistActivity.class);
+//            intent.putExtra("artist", artist);
+//            startActivity(intent);
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +158,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         if (event != null) {
-            collapsingToolbarLayout.setTitle(event.getArtist_name());
+            collapsingToolbarLayout.setTitle(event.getName());
         }
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         // toolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -169,19 +180,19 @@ public class EventDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), RecommendedEventActivity.class);
 
                 if (event != null) {
-                    intent.putExtra("event", event.getArtist_name());
+                    intent.putExtra("event", event.getName());
                 }
                 startActivity(intent);
             }
         });
 
-        llArtists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ArtistActivity.class);
-                startActivity(intent);
-            }
-        });
+//        llArtists.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getBaseContext(), ArtistActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         setUpPage();
 
@@ -192,7 +203,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         if (event != null) {
             setUpHeader();
             setUpDateAndTime();
-            setUpPerformers();
+            setUpTicket();
+//            setUpPerformers();
             setUpVenue();
         } else {
             Toast.makeText(getBaseContext(), "Event object is null", Toast.LENGTH_SHORT).show();
@@ -201,6 +213,39 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void setUpTicket() {
 
+        eventTickets = new ArrayList<>();
+        mticketsRecyclerList.setLayoutManager(new LinearLayoutManager(this));
+        recommendedEventsAdapter = new RecommendedEventsInAdapter(eventTickets, getApplicationContext());
+        mticketsRecyclerList.setAdapter(recommendedEventsAdapter);
+        if (event != null) {
+            Log.d("Recommended name", event.getName());
+            getRecommendEvents();
+        }
+        showMoreRecommendedEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDetailsActivity.this, RecommendedEventActivity.class);
+                if (event.getName() != null) {
+                    intent.putExtra("eventName", event.getName());
+                }
+                startActivity(intent);
+            }
+        });
+
+
+        if(event.getTickets() != null){
+            Ticket ticketInfo = event.getTickets().get(0);
+
+            TextView ticketName = (TextView) findViewById(R.id.tvEvent_details_ticket_name);
+            TextView ticketPrice = (TextView) findViewById(R.id.tvEvent_details_ticket_amount);
+//
+//
+            ticketPrice.setVisibility(View.VISIBLE);
+            ticketPrice.setText(ticketInfo.getAmount()+"");
+
+            Toast.makeText(EventDetailsActivity.this, "Exists", Toast.LENGTH_SHORT).show();
+
+        }else Toast.makeText(EventDetailsActivity.this, "Ticket info is null", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -225,6 +270,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvCityAndState.setText(venue.getCity() + ", " + venue.getState() + ", " + venue.getCountry());
         tvDistance.setText((float) Math.round(Double.parseDouble(event.getDistance())) + " km");
 
+        assert tvVenuePge != null;
         tvVenuePge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +282,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
 
+        if(Util.isOnline(this))
         Picasso.with(this).load(Functions.deriveVenueImage(venue.getLatitude(), venue.getLongitude())).into(ivMapImage);
     }
 
@@ -258,7 +305,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
                 }
 
-                tvSingleArtistName.setText(artist.getName());
+                tvSingleArtistName.setText(artist.getArtist_name());
                 // tvSingleArtistName.setText(artist.get); //will do description from artist object
                 getArtist(Integer.parseInt(artist.getId()), tvSingleArtistName, tvArtistDescription,
                         civPerformerPic);
@@ -275,7 +322,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
                     }
                     getArtist(Integer.parseInt(artist.getId()), tvArtistName, civArtistPic);
-                    tvArtistName.setText(artist.getName());
+                    tvArtistName.setText(artist.getArtist_name());
                     llPerformers.addView(view);
                 }
             }
@@ -302,7 +349,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onNext(Artist artistt) {
                         artist = artistt;
-                        tvArtistName.setText(artist.getName());
+                        tvArtistName.setText(artist.getArtist_name());
                         save(artist);
 
                         tvArtistDescription.setText(Html.fromHtml(artist.getDescription()));
@@ -336,7 +383,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(final Artist artist) {
-                        tvArtistName.setText(artist.getName());
+                        tvArtistName.setText(artist.getArtist_name());
                         save(artist);
 
                         if (artist.getImages() != null) {
@@ -390,12 +437,12 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpHeader() {
-        tvEventName.setText(event.getArtist_name());
+        tvEventName.setText(event.getName());
         String artists = "";
 
         if (event.getArtists() != null) {
             for (Artist artist : event.getArtists()) {
-                artists += artist.getName() + ", ";
+                artists += artist.getArtist_name() + ", ";
             }
         }
         tvEventPerformers.setText(artists);
@@ -440,7 +487,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
         if (id == R.id.event_share) {
             String body = "Check out "
-                    + event.getArtist_name()
+                    + event.getName()
                     + " on "
                     + DataFormatter.formatDate(event.getEventDateLocal())
                     + " "
@@ -473,15 +520,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         recommendedEventsAdapter = new RecommendedEventsInAdapter(recommendedEvents, getApplicationContext());
         mRecommendedRecyclerList.setAdapter(recommendedEventsAdapter);
         if (event != null) {
-            Log.d("Recommended name", event.getArtist_name());
+            Log.d("Recommended name", event.getName());
             getRecommendEvents();
         }
         showMoreRecommendedEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EventDetailsActivity.this, RecommendedEventActivity.class);
-                if (event.getArtist_name() != null) {
-                    intent.putExtra("eventName", event.getArtist_name());
+                if (event.getName() != null) {
+                    intent.putExtra("eventName", event.getName());
                 }
                 startActivity(intent);
             }
@@ -493,7 +540,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         mRecommendedRecyclerList.setVisibility(RecyclerView.VISIBLE);
         emptyRecommendedEventsIndicator.setVisibility(TextView.GONE);
         API api = RetrofitAdapter.createAPI();
-        Observable<AutoSuggestSearchResult> events = api.autoSuggestEvent(event.getArtist_name());
+        Observable<AutoSuggestSearchResult> events = api.autoSuggestEvent(event.getName());
         events.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.newThread())
                 .distinct().
@@ -525,13 +572,13 @@ public class EventDetailsActivity extends AppCompatActivity {
                         } else if (eventCallback.getTotalEventsFound() == 2) {
                             for (int i = 0; i < 2; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
-                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
+                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
                             }
 
                         } else if (eventCallback.getTotalEventsFound() >= 3) {
                             for (int i = 0; i < 3; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
-                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getArtist_name());
+                                Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
                             }
                             moreRecommendedEvents = true;
                             showMoreRecommendedEvents.setVisibility(LinearLayout.VISIBLE);

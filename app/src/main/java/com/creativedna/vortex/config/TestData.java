@@ -15,7 +15,7 @@ public class TestData {
     public static ArrayList<Artist> getArtists() {
         for (int i = 0; i < 10; i++) {
             Artist artist = new Artist();
-            artist.setName("Nicki");
+            artist.setArtist_name("Nicki");
             artist.setId(i+"");
             artist.setDescription("Boss lady");
             artist.setDescriptionSource("New yotk times");

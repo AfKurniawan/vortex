@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.creativedna.vortex.ui.fragments.TabAllEventsFragment;
-import com.creativedna.vortex.ui.fragments.TabArtistsFragment;
 import com.creativedna.vortex.ui.fragments.TabFavoritesFragment;
 import com.creativedna.vortex.ui.fragments.TabPopularFragment;
 
@@ -25,9 +24,9 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             return new TabAllEventsFragment();
         }else if (position == 1) {
             return new TabPopularFragment();
+//        }else if (position == 2) {
+//            return new TabArtistsFragment();
         }else if (position == 2) {
-            return new TabArtistsFragment();
-        }else if (position == 3) {
             return new TabFavoritesFragment();
         }else{
             return new TabAllEventsFragment();
@@ -37,7 +36,7 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -46,9 +45,9 @@ public class MainFragmentsAdapter extends FragmentPagerAdapter {
             return "ALL EVENTS" ;
         } else if (position == 1) {
             return "POPULAR";
-        } else if (position == 2) {
-            return "ALL ARTISTS";
-        }else if (position == 3) {
+//        } else if (position == 2) {
+//            return "ALL ARTISTS";
+        }else if (position == 2) {
             return "FAVORITES";
         } else {
             return null;

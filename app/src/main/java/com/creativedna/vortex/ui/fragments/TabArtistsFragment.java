@@ -97,7 +97,7 @@ public class TabArtistsFragment extends Fragment {
             }
         });
 
-//        favoriteArtists();
+        favoriteArtists();
 
         return view;
     }
@@ -172,7 +172,7 @@ public class TabArtistsFragment extends Fragment {
 
                             for (int i = 0; i < eventCallback.getTotalEventsFound(); i++) {
                                 events.add(eventCallback.getEvents().get(i));
-                                Log.d("My artist events: ", eventCallback.getEvents().get(i).getArtist_name());
+                                Log.d("My artist events: ", eventCallback.getEvents().get(i).getName());
 
                             }
                             myArtistEventsAdapter.notifyDataSetChanged();
@@ -202,7 +202,7 @@ public class TabArtistsFragment extends Fragment {
                                 Artist artist = entity.getData();
                                 artists.add(artist);
                                 names.add(artist.getName());
-                                Log.d("My artist list", artist.getName());
+//                                Log.d("My artist list", artist.getName());
                                 getEvents(artist.getName());
                             }
                         } else {
@@ -216,7 +216,7 @@ public class TabArtistsFragment extends Fragment {
     private ArrayList<String> getArtistNames() {
         ArrayList<String> names = new ArrayList<>();
         for (int i = 0; i < artists.size(); i++) {
-            names.add(artists.get(i).getName());
+            names.add(artists.get(i).getArtist_name());
         }
         return names;
     }

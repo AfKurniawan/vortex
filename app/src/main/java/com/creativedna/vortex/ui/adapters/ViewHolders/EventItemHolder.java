@@ -56,7 +56,7 @@ public class EventItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(final Event event) {
-        eventTitle.setText(event.getArtist_name());
+        eventTitle.setText(event.getName());
         eventCity.setText(event.getVenue().getCity());
         eventDesc.setText(event.getVenue().getName());
         Picasso.with(context).load(event.getImageUrl()).placeholder(R.drawable.placeholder).into(eventImage);
@@ -79,7 +79,7 @@ public class EventItemHolder extends RecyclerView.ViewHolder {
 
         if (event.getArtists() != null) {
             for (Artist artist : event.getArtists()) {
-                artists += artist.getName() + ", ";
+                artists += artist.getArtist_name() + ", ";
             }
         }
 //

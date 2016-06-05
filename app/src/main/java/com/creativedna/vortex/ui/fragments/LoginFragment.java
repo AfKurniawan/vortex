@@ -26,6 +26,8 @@ import com.creativedna.vortex.ui.activities.LandingPage;
 import com.creativedna.vortex.ui.activities.LoginActivity;
 import com.creativedna.vortex.ui.activities.SignupActivity;
 import com.facebook.GraphResponse;
+import com.facebook.internal.ImageRequest;
+import com.facebook.internal.ImageResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
@@ -54,7 +56,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
     @Bind(R.id.link_signup) TextView _signupLink;
 
 
-     ProgressDialog progressDialog ;
+    ProgressDialog progressDialog ;
 
     @Bind(R.id.login_layout)
     LinearLayout view;
@@ -175,7 +177,14 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
             userModel.userName = jsonObject.getString("name");
             userModel.userEmail = jsonObject.getString("email");
             String id = jsonObject.getString("id");
-            String profileImg = "http://graph.facebook.com/"+ id+ "/picture?type=large";
+//            String profileImg = "http://graph.facebook.com/"+ id+ "/picture?type=large";
+            String profileImg = "http://pcwallart.com/images/generic-avatar-icon-wallpaper-2.jpg";
+
+            ImageRequest request = getImageRequest(id);
+            if (request != null) {
+                profileImg = request.getImageUri().toString();
+            }
+
             userModel.profilePic = profileImg;
             Log.i(TAG,profileImg);
         } catch (JSONException e) {
@@ -185,6 +194,27 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
         return userModel;
     }
 
+    private ImageRequest getImageRequest(String id) {
+        ImageRequest request = null;
+        ImageRequest.Builder requestBuilder = new ImageRequest.Builder(
+                getActivity(),
+                ImageRequest.getProfilePictureUri(id,
+                        getResources().getDimensionPixelSize(
+                                R.dimen.profileImageSize),
+                        getResources().getDimensionPixelSize(
+                                R.dimen.profileImageSize)));
+
+        request = requestBuilder.setCallerTag(this)
+                .setCallback(
+                        new ImageRequest.Callback() {
+                            @Override
+                            public void onCompleted(ImageResponse response) {
+
+                            }
+                        })
+                .build();
+        return request;
+    }
     @Override
     public void OnFbError(String errorMessage) {
         resetToDefaultView(errorMessage);
@@ -300,7 +330,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
 
                 }
                 Log.i(TAG,result);
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
             }
         }
 

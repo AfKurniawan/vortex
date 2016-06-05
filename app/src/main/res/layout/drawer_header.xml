@@ -1,6 +1,7 @@
 <RelativeLayout android:id="@+id/nav_contentframe"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:fresco="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -38,14 +39,26 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <!--<com.facebook.drawee.view.SimpleDraweeView-->
+                    <!--android:id="@+id/user_imageview"-->
+                    <!--android:layout_width="80dp"-->
+                    <!--android:layout_height="80dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--fresco:actualImageScaleType="focusCrop"-->
+                    <!--fresco:roundAsCircle="true"-->
+                <!--/>-->
+
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_imageview"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
-                    fresco:actualImageScaleType="focusCrop"
-                    fresco:roundAsCircle="true"
-                />
+                    android:clickable="true"
+                    android:elevation="2dp"
+                    android:src="@drawable/profile"/>
+
 
                 <TextView
                     android:id="@+id/name_textview"
@@ -53,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/user_imageview"
                     android:layout_marginTop="10dp"
-                    android:text="Arun Sharma"
+                    android:text="John Doe"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/primary"
                     android:textSize="20sp"/>
@@ -107,12 +120,23 @@
             </LinearLayout>
         </FrameLayout>
 
-
-        <com.andexert.library.RippleView
+        <com.balysv.materialripple.MaterialRippleLayout
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
             android:id="@+id/rvDrawer_home"
-            rv_centered="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/more2"
+            android:layout_margin="5dp"
+           >
+
+        <!--<com.andexert.library.RippleView-->
+            <!--android:id="@+id/rvDrawer_home"-->
+            <!--rv_centered="true"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,17 +165,20 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="16dp"
                     android:gravity="left"
-                    android:text="Home"
+                    android:text="All Events"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
                 />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
-        <com.andexert.library.RippleView
+        <com.balysv.materialripple.MaterialRippleLayout
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
             android:id="@+id/rvDrawer_categories"
-            rv_centered="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -188,11 +215,14 @@
                     android:textStyle="bold"
                 />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
-        <com.andexert.library.RippleView
+        <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/rvDrawer_notifications"
-            rv_centered="true"
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -229,53 +259,66 @@
                     android:textStyle="bold"
                 />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
-        <com.andexert.library.RippleView
-            android:id="@+id/rvDrawer_manage_artist"
-            rv_centered="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+        <!--<com.andexert.library.RippleView-->
+            <!--rv_color="@color/grey"-->
+            <!--android:id="@+id/rvDrawer_manage_artist"-->
+            <!--rv_centered="true"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="visible">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:background="#ffffff"
-                android:orientation="horizontal">
+            <!--<com.balysv.materialripple.MaterialRippleLayout-->
+                <!--app:mrl_rippleColor="#585858"-->
+                <!--app:mrl_rippleAlpha="0.2"-->
+                <!--app:mrl_rippleHover="true"-->
+                <!--app:mrl_rippleOverlay="true"-->
+                <!--android:id="@+id/rvDrawer_manage_artist"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/drawer_artists"
-                />
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="0dp"-->
+                <!--android:background="#ffffff"-->
+                <!--android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="left"
-                    android:text="Manage My Artists"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                />
-            </LinearLayout>
-        </com.andexert.library.RippleView>
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_marginBottom="12dp"-->
+                    <!--android:layout_marginLeft="16dp"-->
+                    <!--android:layout_marginRight="16dp"-->
+                    <!--android:layout_marginTop="12dp"-->
+                    <!--android:src="@drawable/drawer_artists"-->
+                <!--/>-->
 
-        <com.andexert.library.RippleView
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_marginBottom="16dp"-->
+                    <!--android:layout_marginLeft="16dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:gravity="left"-->
+                    <!--android:text="Manage My Artists"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:textStyle="bold"-->
+                <!--/>-->
+            <!--</LinearLayout>-->
+        <!--</com.balysv.materialripple.MaterialRippleLayout>-->
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
             android:id="@+id/rvDrawer_send_feedback"
-            rv_centered="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -313,10 +356,14 @@
                     android:textStyle="bold"
                 />
             </LinearLayout>
-        </com.andexert.library.RippleView>
-        <com.andexert.library.RippleView
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
             android:id="@+id/rvDrawer_logout"
-            rv_centered="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -347,13 +394,13 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="16dp"
                     android:gravity="left"
-                    android:text="Logut"
+                    android:text="Logout"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
                 />
             </LinearLayout>
-        </com.andexert.library.RippleView>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
 
     </LinearLayout>
@@ -364,9 +411,12 @@
         android:layout_gravity="bottom"
         android:background="@color/primary"
     />
-    <com.andexert.library.RippleView
+    <com.balysv.materialripple.MaterialRippleLayout
+        app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleColor="#585858"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleOverlay="true"
         android:id="@+id/rvDrawer_settings"
-        rv_centered="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -406,6 +456,6 @@
                 android:textStyle="bold"
             />
         </LinearLayout>
-    </com.andexert.library.RippleView>
+    </com.balysv.materialripple.MaterialRippleLayout>
 
 </RelativeLayout>

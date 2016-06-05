@@ -95,7 +95,7 @@
                         android:paddingRight="16dp"
                         android:paddingTop="0dp"
                         android:maxLines="2"
-                        android:text="Just a band,  Jojo Abot and Muthoni the drummer queen"
+                        android:text="Just a band"
                         android:textAllCaps="true"
                         android:textColor="@color/primary"
                         android:textStyle="bold"

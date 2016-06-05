@@ -11,7 +11,7 @@
    <color name="primary_dark">#E64A19</color>
    <color name="primary_light">#B2DFDB</color>
    <color name="accent">#f36719</color>
-   <color name="primary_text">#212121</color>
+   <color name="primary_text">#FFF</color>
    <color name="secondary_text">#727272</color>
    <color name="icons">#FFFFFF</color>
    <color name="divider">#EEEEEE</color>
@@ -25,9 +25,6 @@
     <color name="white">#FFFFFF</color>
 
 
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
-    <color name="colorAccent">#B9F6CA</color>
 
     <color name="fb_color">#44619C</color>
     <color name="g_color">#DD4C39</color>
