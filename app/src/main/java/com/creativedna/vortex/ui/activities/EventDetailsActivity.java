@@ -26,13 +26,15 @@ import com.colintmiller.simplenosql.NoSQLEntity;
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
+import com.creativedna.vortex.data.callbacks.ArtistEventCallback;
 import com.creativedna.vortex.events.FavoriteEvent;
 import com.creativedna.vortex.models.Artist;
-import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Event;
 import com.creativedna.vortex.models.Ticket;
 import com.creativedna.vortex.models.Venue;
+import com.creativedna.vortex.ui.adapters.EventsTicketsAdapter;
 import com.creativedna.vortex.ui.adapters.RecommendedEventsInAdapter;
+import com.creativedna.vortex.ui.views.DividerItemDecoration;
 import com.creativedna.vortex.utils.DataFormatter;
 import com.creativedna.vortex.utils.Functions;
 import com.creativedna.vortex.utils.Util;
@@ -63,11 +65,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     @Bind(R.id.rvTicketsRecycler)
     RecyclerView mticketsRecyclerList;
 
-    RecommendedEventsInAdapter evnetTicketsAdapter;
+    EventsTicketsAdapter evnetTicketsAdapter;
 
     @Bind(R.id.rvRecommendedRecycler)
     RecyclerView mRecommendedRecyclerList;
     RecommendedEventsInAdapter recommendedEventsAdapter;
+
+    @Bind(R.id.tvEvent_details_ticket_name)
+    TextView emptyEventTicketsIndicator;
+
     @Bind(R.id.tvRecommendation_empty_indicator)
     TextView emptyRecommendedEventsIndicator;
     @Bind(R.id.llRecommended_show_more)
@@ -99,13 +105,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     @Bind(R.id.rlTicket_layout)
     RelativeLayout ticketlayout;
-    @Bind(R.id.tvEvent_details_ticket_name)
-    TextView ticketSite;
+
     @Bind(R.id.pbEvent_loading)
     ProgressBar eventLoadingBar;
-    @Bind(R.id.tvEvent_details_ticket_amount)
-    TextView ticketAmount;
-    String ticketUrl;
+
     Event event;
     Artist artist;
     ArrayList<Event> recommendedEvents;
@@ -203,7 +206,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         if (event != null) {
             setUpHeader();
             setUpDateAndTime();
-            setUpTicket();
+            setUpTickets();
 //            setUpPerformers();
             setUpVenue();
         } else {
@@ -211,42 +214,41 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpTicket() {
+    private void setUpTickets() {
+        mTicketsProgress.setVisibility(ProgressBar.VISIBLE);
+        mticketsRecyclerList.setVisibility(RecyclerView.VISIBLE);
+        emptyEventTicketsIndicator.setVisibility(TextView.GONE);
 
         eventTickets = new ArrayList<>();
         mticketsRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-        recommendedEventsAdapter = new RecommendedEventsInAdapter(eventTickets, getApplicationContext());
-        mticketsRecyclerList.setAdapter(recommendedEventsAdapter);
-        if (event != null) {
-            Log.d("Recommended name", event.getName());
-            getRecommendEvents();
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this
+                .getResources().getDrawable(R.drawable.diver));
+        mticketsRecyclerList.addItemDecoration(dividerItemDecoration);
+
+        evnetTicketsAdapter = new EventsTicketsAdapter(eventTickets, getApplicationContext());
+        mticketsRecyclerList.setAdapter(evnetTicketsAdapter);
+
+
+        if (event.getTickets() != null && event.getTickets().size()>0) {
+
+            showTickets();
+        }else {
+            mTicketsProgress.setVisibility(ProgressBar.GONE);
+            emptyEventTicketsIndicator.setVisibility(TextView.VISIBLE);
+            mticketsRecyclerList.setVisibility(RecyclerView.GONE);
         }
-        showMoreRecommendedEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EventDetailsActivity.this, RecommendedEventActivity.class);
-                if (event.getName() != null) {
-                    intent.putExtra("eventName", event.getName());
-                }
-                startActivity(intent);
-            }
-        });
 
+    }
 
-        if(event.getTickets() != null){
-            Ticket ticketInfo = event.getTickets().get(0);
+    private void showTickets(){
 
-            TextView ticketName = (TextView) findViewById(R.id.tvEvent_details_ticket_name);
-            TextView ticketPrice = (TextView) findViewById(R.id.tvEvent_details_ticket_amount);
-//
-//
-            ticketPrice.setVisibility(View.VISIBLE);
-            ticketPrice.setText(ticketInfo.getAmount()+"");
+        eventTickets.clear();
+        eventTickets.addAll(event.getTickets());
+        evnetTicketsAdapter.notifyDataSetChanged();
 
-            Toast.makeText(EventDetailsActivity.this, "Exists", Toast.LENGTH_SHORT).show();
-
-        }else Toast.makeText(EventDetailsActivity.this, "Ticket info is null", Toast.LENGTH_SHORT).show();
-
+        mTicketsProgress.setVisibility(ProgressBar.GONE);
+        emptyEventTicketsIndicator.setVisibility(TextView.GONE);
+        mticketsRecyclerList.setVisibility(RecyclerView.VISIBLE);
     }
 
     private void setUpVenue() {
@@ -535,16 +537,20 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
     }
 
+
     private void getRecommendEvents() {
         mRecommendedProgress.setVisibility(ProgressBar.VISIBLE);
         mRecommendedRecyclerList.setVisibility(RecyclerView.VISIBLE);
         emptyRecommendedEventsIndicator.setVisibility(TextView.GONE);
+
+        artist = event.getArtists().get(0);
+
         API api = RetrofitAdapter.createAPI();
-        Observable<AutoSuggestSearchResult> events = api.autoSuggestEvent(event.getName());
+        Observable<ArtistEventCallback> events = api.getCategoryEvents(9);
         events.observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.newThread())
                 .distinct().
-                subscribe(new Subscriber<AutoSuggestSearchResult>() {
+                subscribe(new Subscriber<ArtistEventCallback>() {
                     @Override
                     public void onCompleted() {
                         mRecommendedProgress.setVisibility(ProgressBar.GONE);
@@ -563,19 +569,19 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(AutoSuggestSearchResult eventCallback) {
-                        Log.d("Recommended number", "" + eventCallback.getTotalEventsFound());
+                    public void onNext(ArtistEventCallback eventCallback) {
+                        Log.d("Recommended number", "" + eventCallback.getNumFound());
                         mRecommendedProgress.setVisibility(ProgressBar.VISIBLE);
                         mRecommendedRecyclerList.setVisibility(RecyclerView.VISIBLE);
-                        if (eventCallback.getTotalEventsFound() == 1) {
+                        if (eventCallback.getNumFound() == 1) {
                             recommendedEvents.add(eventCallback.getEvents().get(0));
-                        } else if (eventCallback.getTotalEventsFound() == 2) {
+                        } else if (eventCallback.getNumFound() == 2) {
                             for (int i = 0; i < 2; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
                                 Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
                             }
 
-                        } else if (eventCallback.getTotalEventsFound() >= 3) {
+                        } else if (eventCallback.getNumFound() >= 3) {
                             for (int i = 0; i < 3; i++) {
                                 recommendedEvents.add(eventCallback.getEvents().get(i));
                                 Log.d("Recommended Event", eventCallback.getEvents().get(i).getName());
@@ -635,10 +641,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         ticketlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = ticketUrl;
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+//                String url = ticketUrl;
+//                Intent i = new Intent(Intent.ACTION_VIEW);
+//                i.setData(Uri.parse(url));
+//                startActivity(i);
             }
         });
     }

@@ -9,7 +9,6 @@ import com.creativedna.vortex.R;
 import com.creativedna.vortex.models.Ticket;
 import com.creativedna.vortex.ui.adapters.ViewHolders.EventHeader;
 import com.creativedna.vortex.ui.adapters.ViewHolders.TicketsViewHolder;
-import com.creativedna.vortex.utils.DataFormatter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.ArrayList;
@@ -30,7 +29,8 @@ public class EventsTicketsAdapter extends RecyclerView.Adapter<TicketsViewHolder
 
     @Override
     public TicketsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new TicketsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recommended_single_item, parent, false));
+        return new TicketsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_single_item,
+                parent, false));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class EventsTicketsAdapter extends RecyclerView.Adapter<TicketsViewHolder
 
     @Override
     public void onBindHeaderViewHolder(EventHeader holder, int position) {
-        String date = DataFormatter.formatDate(tickets.get(position).getType());
-        holder.renderView(date);
+//        String date = DataFormatter.formatDate(tickets.get(position).getType());
+        holder.renderView(tickets.get(position).getType());
     }
 
     @Override

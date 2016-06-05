@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.balysv.materialripple.MaterialRippleLayout
+    app:mrl_rippleAlpha="0.2"
+    app:mrl_rippleColor="#585858"
+    app:mrl_rippleHover="true"
+    app:mrl_rippleOverlay="true"
     android:id="@+id/rlRecommendedEvent"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp">
+
+
 
 
     <TextView
@@ -49,6 +63,31 @@
         android:textColor="@color/black"
         android:textSize="12sp" />
 
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tvEvent_details_ticket_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/rlEventBooking"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Ushs"
+        android:textColor="@color/black"
+        android:visibility="visible"/>
+
+
+    <TextView
+        android:layout_below="@+id/tvEvent_details_ticket_code"
+        android:id="@+id/tvEvent_details_ticket_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:layout_toLeftOf="@+id/rlEventBooking"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="60,000/="
+        android:textColor="@color/black"
+        android:visibility="visible"/>
+
     <LinearLayout
         android:id="@+id/rlEventBooking"
         android:layout_width="72dp"
@@ -80,6 +119,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvTicketQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -99,5 +139,5 @@
             android:textSize="14dp" />
 
     </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

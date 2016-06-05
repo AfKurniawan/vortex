@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rlTicket_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="16dp"
-    android:orientation="vertical">
+<RelativeLayout android:id="@+id/rlTicket_layout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:customfontdemo="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
     <com.creativedna.vortex.ui.views.CustomFontTextView
         android:id="@+id/tickets_title"
@@ -29,12 +29,14 @@
         android:textAllCaps="true"
         android:textColor="#ffffff"
         android:textSize="20dp"
-        customfontdemo:fontName="@string/font_title" />
+        customfontdemo:fontName="@string/font_title"/>
 
     <RelativeLayout
-        android:layout_below="@+id/tickets_title"
+        android:id="@+id/contentView"
+        android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tickets_title">
 
         <TextView
             android:id="@+id/tvEvent_details_ticket_name"
@@ -45,24 +47,15 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
             android:layout_marginTop="0dp"
-            android:gravity="center"
             android:background="#ffffff"
+            android:gravity="center"
             android:paddingBottom="16dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="16dp"
             android:text="@string/no_ticket_information"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/tvRecommendation_empty_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="@string/no_recommended_events"
-            android:textSize="16sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvTicketsRecycler"
@@ -71,7 +64,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:maxHeight="180dp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/pbTicketsProgress"
@@ -80,43 +73,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
 
-
-
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tvEvent_details_ticket_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tickets_title"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="00dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
-        android:gravity="left"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="24dp"
-        android:text="Ushs. 60,000"
-        android:textColor="@color/black" />
-
-
     <ImageView
+        android:layout_below="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="-4dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/tickets_background" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/tickets_background"/>
 
     <ProgressBar
         android:id="@+id/pbEvent_loading"
@@ -126,9 +94,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="44dp"
         android:background="#ffffff"
-        android:visibility="gone"
-        android:layout_marginTop="44dp" />
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

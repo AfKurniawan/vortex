@@ -21,10 +21,21 @@ public class TicketsViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.tvEventTicketTitle)
     TextView tvEventTicketTitle;
+
+    @Bind(R.id.tvEvent_details_ticket_code)
+    TextView tvTicketCurrencyCode;
+
     @Bind(R.id.tvEventTicketsExpiry)
     TextView tvEventTicketsExpiry;
+
+    @Bind(R.id.tvEvent_details_ticket_amount)
+    TextView tvTicketAmount;
+
     @Bind(R.id.rlEventBooking)
     LinearLayout rlEventBooking;
+
+    @Bind(R.id.tvTicketQuantity)
+    TextView tvTicketQuantity;
 
     public TicketsViewHolder(View itemView) {
         super(itemView);
@@ -32,9 +43,18 @@ public class TicketsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void renderView(final Context context, final Ticket ticket) {
-        tvEventTicketTitle.setText(ticket.getTotalAvailable());
-        String time = DataFormatter.formatDate(ticket.getDealine());
+        tvEventTicketTitle.setText(ticket.getType());
+        String time ="Expires on - Not Specified";
+
+        if( ticket.getDealine() != null)
+        time = DataFormatter.formatDate(ticket.getDealine());
         tvEventTicketsExpiry.setText(time);
+
+        tvTicketCurrencyCode.setText(ticket.getCurrencyCode());
+
+        tvTicketQuantity.setText(ticket.getTotalAvailable()+" left");
+
+        tvTicketAmount.setText(ticket.getAmount());
 
         rlEventBooking.setOnClickListener(new View.OnClickListener() {
             @Override
