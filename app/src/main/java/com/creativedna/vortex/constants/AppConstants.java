@@ -23,10 +23,10 @@ public class AppConstants {
     }
 
 
-    public static final String REGISTER_URL = "http://192.168.43.9/vortex/register.php";
-    public static final String LOGIN_URL = "http://192.168.43.9/vortex/login.php";
-    public static final String BASE_URL = "http://192.168.43.9/vortex/index.php/api/";
-//    String BASE_URL = "http://192.168.1.240/vortex/test/";
+    public static final String REGISTER_URL = "http://192.168.1.23/vortex/register.php";
+    public static final String LOGIN_URL = "http://192.168.1.23/vortex/login.php";
+    public static final String BASE_URL = "http://192.168.1.23/vortex/index.php/api/";
+//
 //    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
 
 
