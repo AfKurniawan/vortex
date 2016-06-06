@@ -126,7 +126,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                 Artist category = artistCallback.getArtists().get(i);
                                 categories.add(category);
                                 save(category);
-                                Log.d("My Category: ", category.getArtist_name());
+                                Log.d("My Category: ", category.getCategory_name());
 
                             }
                             categoryListAdapter.notifyDataSetChanged();
@@ -180,7 +180,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
 //                            Collections.sort(categories, new Comparator<Artist>() {
 //                                public int compare(Artist artist1, Artist artist2) {
-//                                    return artist1.getArtist_name().compareTo(artist2.getArtist_name());
+//                                    return artist1.getCategory_name().compareTo(artist2.getCategory_name());
 //                                }
 //                            });
 

@@ -39,7 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        holder.text.setText(content.get(position).getArtist_name());
+        holder.text.setText(content.get(position).getCategory_name());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
             Artist artist = content.get(getAdapterPosition());
             Intent intent = new Intent(context, CategoryEvent.class);
-            intent.putExtra("title", artist.getArtist_name());
+            intent.putExtra("title", artist.getCategory_name());
             intent.putExtra("cat_id", Integer.parseInt(artist.getId()));
 
             context.startActivity(intent);

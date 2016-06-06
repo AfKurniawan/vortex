@@ -302,7 +302,7 @@ public class ManageMyArtistActivity extends AppCompatActivity {
 
                             Collections.sort(artists, new Comparator<Artist>() {
                                 public int compare(Artist artist1, Artist artist2) {
-                                    return artist1.getArtist_name().compareTo(artist2.getArtist_name());
+                                    return artist1.getCategory_name().compareTo(artist2.getCategory_name());
                                 }
                             });
 

@@ -307,7 +307,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
                 }
 
-                tvSingleArtistName.setText(artist.getArtist_name());
+                tvSingleArtistName.setText(artist.getCategory_name());
                 // tvSingleArtistName.setText(artist.get); //will do description from artist object
                 getArtist(Integer.parseInt(artist.getId()), tvSingleArtistName, tvArtistDescription,
                         civPerformerPic);
@@ -324,7 +324,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
                     }
                     getArtist(Integer.parseInt(artist.getId()), tvArtistName, civArtistPic);
-                    tvArtistName.setText(artist.getArtist_name());
+                    tvArtistName.setText(artist.getCategory_name());
                     llPerformers.addView(view);
                 }
             }
@@ -351,7 +351,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onNext(Artist artistt) {
                         artist = artistt;
-                        tvArtistName.setText(artist.getArtist_name());
+                        tvArtistName.setText(artist.getCategory_name());
                         save(artist);
 
                         tvArtistDescription.setText(Html.fromHtml(artist.getDescription()));
@@ -385,7 +385,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(final Artist artist) {
-                        tvArtistName.setText(artist.getArtist_name());
+                        tvArtistName.setText(artist.getCategory_name());
                         save(artist);
 
                         if (artist.getImages() != null) {
@@ -444,7 +444,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         if (event.getArtists() != null) {
             for (Artist artist : event.getArtists()) {
-                artists += artist.getArtist_name() + ", ";
+                artists += artist.getCategory_name() + ", ";
             }
         }
         tvEventPerformers.setText(artists);

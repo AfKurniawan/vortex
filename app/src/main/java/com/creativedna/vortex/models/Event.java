@@ -188,11 +188,11 @@ public class Event implements Serializable {
 //        this.id = id;
 //    }
 //
-//    public String getArtist_name() {
+//    public String getCategory_name() {
 //        return artist_name;
 //    }
 //
-//    public void setArtist_name(String artist_name) {
+//    public void setCategory_name(String artist_name) {
 //        this.artist_name = artist_name;
 //    }
 //

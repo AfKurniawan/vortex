@@ -216,7 +216,7 @@ public class TabArtistsFragment extends Fragment {
     private ArrayList<String> getArtistNames() {
         ArrayList<String> names = new ArrayList<>();
         for (int i = 0; i < artists.size(); i++) {
-            names.add(artists.get(i).getArtist_name());
+            names.add(artists.get(i).getCategory_name());
         }
         return names;
     }

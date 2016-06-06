@@ -95,7 +95,7 @@ public class ArtistActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         if (artist != null) {
-            collapsingToolbarLayout.setTitle(artist.getArtist_name());
+            collapsingToolbarLayout.setTitle(artist.getCategory_name());
         }
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -124,7 +124,7 @@ public class ArtistActivity extends AppCompatActivity {
             setUpAbout();
 
             CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            collapsingToolbarLayout.setTitle(artist.getArtist_name());
+            collapsingToolbarLayout.setTitle(artist.getCategory_name());
 
         }
     }
@@ -136,7 +136,7 @@ public class ArtistActivity extends AppCompatActivity {
         final TextView tvShowMoreLess = (TextView) findViewById(R.id.tvArtist_info_show_more_less);
         final ImageView ivShowMoreLess = (ImageView) findViewById(R.id.ivArtist_info_show_more_less_arrow);
 
-        tvAboutTitle.setText("About " + artist.getArtist_name());
+        tvAboutTitle.setText("About " + artist.getCategory_name());
         tvDescription.setText(artist.getDescription());
         tvDescription.setMaxLines(4);
 
@@ -172,7 +172,7 @@ public class ArtistActivity extends AppCompatActivity {
         CircularImageView civPpic = (CircularImageView) findViewById(R.id.ivActivity_artist_image);
         ImageView ivBanner = (ImageView) findViewById(R.id.ivActivity_artist_banner);
 
-        tvName.setText(artist.getArtist_name());
+        tvName.setText(artist.getCategory_name());
         String genres = "";
         int i = 0;
         if (artist.getGenres() != null) {
@@ -283,7 +283,7 @@ public class ArtistActivity extends AppCompatActivity {
     private void getUpcomingEvents() {
         mUpcomingProgress.setVisibility(ProgressBar.VISIBLE);
         API api = RetrofitAdapter.createAPI();
-        Observable<AutoSuggestSearchResult> autoSuggestSearchResultObservable = api.autoSuggestEvent(artist.getArtist_name());
+        Observable<AutoSuggestSearchResult> autoSuggestSearchResultObservable = api.autoSuggestEvent(artist.getCategory_name());
         autoSuggestSearchResultObservable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
@@ -296,7 +296,7 @@ public class ArtistActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(ArtistActivity.this, UpcomingEventsActivity.class);
-                                    intent.putExtra("artist_name", artist.getArtist_name());
+                                    intent.putExtra("artist_name", artist.getCategory_name());
                                     startActivity(intent);
                                 }
                             });
@@ -387,7 +387,7 @@ public class ArtistActivity extends AppCompatActivity {
     private void getRecommendEvents() {
         mRecommendedProgress.setVisibility(ProgressBar.VISIBLE);
         API api = RetrofitAdapter.createAPI();
-        Observable<AutoSuggestSearchResult> events = api.getMyArtistEvents2(artist.getArtist_name());
+        Observable<AutoSuggestSearchResult> events = api.getMyArtistEvents2(artist.getCategory_name());
         events
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())

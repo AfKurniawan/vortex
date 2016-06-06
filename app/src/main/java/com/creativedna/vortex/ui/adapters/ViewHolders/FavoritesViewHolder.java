@@ -72,7 +72,7 @@ public class FavoritesViewHolder extends RecyclerView.ViewHolder {
 
         if (event.getArtists() != null) {
             for (Artist performer : event.getArtists()) {
-                performers += performer.getArtist_name() + ", ";
+                performers += performer.getCategory_name() + ", ";
             }
         }
         eventDesc.setText(performers);

@@ -47,8 +47,8 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistViewHolder> im
     private CharSequence getItem(int position) {
 
         Artist artist = artists.get(position);
-        System.out.println("Artist Name: "+ artist.getArtist_name());
-        return artist.getArtist_name();
+        System.out.println("Artist Name: "+ artist.getCategory_name());
+        return artist.getCategory_name();
     }
 
 
@@ -59,7 +59,7 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistViewHolder> im
 
     @Override
     public void onBindHeaderViewHolder(EventHeader holder, int position) {
-        holder.renderView(artists.get(position).getArtist_name().substring(0, 1));
+        holder.renderView(artists.get(position).getCategory_name().substring(0, 1));
     }
 
     @Override

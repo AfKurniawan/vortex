@@ -79,7 +79,7 @@ public class EventItemHolder extends RecyclerView.ViewHolder {
 
         if (event.getArtists() != null) {
             for (Artist artist : event.getArtists()) {
-                artists += artist.getArtist_name() + ", ";
+                artists += artist.getCategory_name() + ", ";
             }
         }
 //
