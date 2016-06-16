@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:customfontdemo="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:customfontdemo="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -19,57 +19,38 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivActivity_notifications_placeholder"
+            android:id="@+id/ivActivity_tickets_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:contentDescription="@null"
-            android:src="@drawable/notificationplaceholder" />
+            android:src="@mipmap/manageartists_loadingartists" />
 
         <TextView
-            android:id="@+id/tvActivity_notifications_empty_text"
+            android:id="@+id/tvActivity_tickets_empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivActivity_notifications_placeholder"
+            android:layout_below="@+id/ivActivity_tickets_placeholder"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal|bottom"
             android:maxLines="2"
-            android:text="New Notifications will pop up here" />
+            android:text="Your Tickets will show up here" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvActivity_notifications_recycler"
+            android:id="@+id/rvActivity_tickets_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
     </RelativeLayout>
-
-
-
-    <com.creativedna.vortex.ui.views.CustomFontTextView
-        android:id="@+id/tvTryAgain"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/rect_btn_rounded"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="Try again"
-        android:textColor="@color/black"
-        android:layout_marginBottom="32dp"
-        customfontdemo:fontName="@string/font_bold"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
 
 </LinearLayout>

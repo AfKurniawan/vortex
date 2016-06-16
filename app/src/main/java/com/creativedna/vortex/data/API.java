@@ -3,6 +3,8 @@ package com.creativedna.vortex.data;
 import com.creativedna.vortex.data.callbacks.ArtistCallback;
 import com.creativedna.vortex.data.callbacks.ArtistEventCallback;
 import com.creativedna.vortex.data.callbacks.EventCallback;
+import com.creativedna.vortex.data.callbacks.NotificationCallback;
+import com.creativedna.vortex.data.callbacks.TicketsCallback;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
 import com.creativedna.vortex.models.Category;
@@ -65,5 +67,11 @@ public interface API {
 
     @GET("event_artists/{id}")
     Observable<ArtistEventCallback> getCategoryEvents(@Path("id") int id);
+
+    @GET("notifications")
+    Observable<NotificationCallback> getNotifications();
+
+    @GET("tickets/{userID}")
+    Observable<TicketsCallback> getTickets(@Path("userID") int userID);
 
 }

@@ -190,6 +190,14 @@
         </activity>
         <activity android:name=".ui.activities.CategoryEvent">
         </activity>
+        <activity
+            android:label="Tickets"
+            android:name=".ui.activities.Tickets"
+                  android:parentActivityName=".ui.activities.LandingPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.creativedna.vortex.ui.activities.LandingPage"/>
+        </activity>
     </application>
 
 </manifest>

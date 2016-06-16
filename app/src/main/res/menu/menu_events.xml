@@ -9,10 +9,10 @@
         <!--app:showAsAction="always" />-->
 
     <item
-        android:id="@+id/mnEvents_notifications"
-        android:icon="@mipmap/btn_menu_notifications_default"
+
+        android:id="@+id/event_notifications"
         android:orderInCategory="1"
-        android:title="location"
+        android:title="Notifications"
         app:showAsAction="always" />
 
     <item

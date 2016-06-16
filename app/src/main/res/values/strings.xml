@@ -87,7 +87,7 @@
     <string name="title_activity_upcoming_events">UpcomingEventsActivity</string>
     <string name="title_activity_search">SearchActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder ticketType -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_ticket_information">No ticket information at this time</string>
     <string name="no_artist_found">No artist found</string>

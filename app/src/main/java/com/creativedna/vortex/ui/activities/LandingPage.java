@@ -18,6 +18,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ import com.colintmiller.simplenosql.NoSQLEntity;
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.data.API;
 import com.creativedna.vortex.data.RetrofitAdapter;
+import com.creativedna.vortex.data.callbacks.NotificationCallback;
 import com.creativedna.vortex.helpers.SharedPreferenceManager;
 import com.creativedna.vortex.models.Artist;
 import com.creativedna.vortex.models.AutoSuggestSearchResult;
@@ -99,6 +101,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
     private ViewPager viewPager;
     private boolean mUserLearnedDrawer;
     private int mCurrentSelectedPosition;
+    private TextView mNotificationCounter;
 
     public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
         SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
@@ -122,6 +125,11 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
         startActivity(new Intent(getBaseContext(), NotificationsActivity.class));
     }
 
+    @OnClick(R.id.rvDrawer_tickets)
+    void goToTickets(){
+        startActivity(new Intent(this,Tickets.class));
+    }
+
     @OnClick(R.id.rvDrawer_logout)
     void logout() {
         SharedPreferenceManager.getSharedInstance().clearAllPreferences();
@@ -140,7 +148,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
         //open main intent
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setData(Uri.parse("mailto:"));
-        intent.setType("text/plain");
+        intent.setType("ticketType/plain");
         intent.putExtra(Intent.EXTRA_EMAIL, "bryanlamtoo@gmail.com");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Vortex feedback");
         intent.putExtra(Intent.EXTRA_TEXT, "Email body");
@@ -393,7 +401,7 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
             //get latitude and longitude of the location
             lng = location.getLongitude();
             lat = location.getLatitude();
-            //display on text view
+            //display on ticketType view
 
             getUserCurrentAddress(location);
         }
@@ -426,6 +434,26 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //Get a reference to your item by id
+        MenuItem item = menu.findItem(R.id.event_notifications);
+        item.setActionView(R.layout.notification_badge);
+
+        //Here, you get access to the view of your item, in this case, the layout of the item has a FrameLayout as root view but you can change it to whatever you use
+        FrameLayout rootView = (FrameLayout)MenuItemCompat.getActionView(item);
+        mNotificationCounter = (TextView) rootView.findViewById(R.id.mNotificationCounter);
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToNotifications();
+            }
+        });
+        fetchNotifications();
+
+        return true;
+    }
+
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_events, menu);
@@ -476,11 +504,9 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
             sbSearch.revealFromMenuItem(id, this);
             vDarkOverlay.setVisibility(View.VISIBLE);
             return true;
-        }else if(id==R.id.mnEvents_notifications){
+        }else if(id==R.id.event_notifications){
             goToNotifications();
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -552,11 +578,46 @@ public class LandingPage extends AppCompatActivity implements LocationListener {
 
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        EventBus.getDefault().register(this);
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void fetchNotifications() {
+        API api = RetrofitAdapter.createAPI();
+        Observable<NotificationCallback> notificationCallbackObservable = api.getNotifications();
+        notificationCallbackObservable
+                .distinct()
+                .take(20)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Subscriber<NotificationCallback>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("getting my notification", "Completed");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mNotificationCounter.setVisibility(View.GONE);
+                        String error = String.format("%s", "Error occurred!");
+                        e.printStackTrace();
+                        Log.e("Categories", "Error Occurred!");
+                    }
+
+                    @Override
+                    public void onNext(NotificationCallback notificationCallback) {
+                        if (notificationCallback.getNumFound() > 0) {
+                            mNotificationCounter.setVisibility(View.VISIBLE);
+                            mNotificationCounter.setText(notificationCallback.getNumFound()+"");
+
+                        } else {
+                            Log.d("My Categories: ", "No categories for my events");
+                        }
+                    }
+                });
+    }
 //
 //    @Override
 //    protected void onPause() {

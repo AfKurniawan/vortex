@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customfontdemo="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:orientation="vertical"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_width="1dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:id="@+id/icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/tickets"/>
+
+        <com.creativedna.vortex.ui.views.CustomFontTextView
+            android:id="@+id/tvTicketType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/badge"
+            android:layout_toRightOf="@+id/icon"
+            android:text="Title goes here"
+            android:textSize="16sp"
+            android:visibility="visible"
+            customfontdemo:fontName="@string/font_title_bold"/>
+
+
+
+
+
+        <!--android:layout_toLeftOf="@+id/badge"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toRightOf="@+id/icon"-->
+        <!--android:id="@+id/tvTicketDescription"-->
+
+        <com.creativedna.vortex.ui.views.CustomFontTextView
+
+            android:id="@+id/tvTicketDescription"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_toLeftOf="@+id/badge"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTicketType"
+            android:text="Title goes here"
+            android:visibility="visible"
+            customfontdemo:fontName="@string/font_title_bold"/>
+
+        <com.creativedna.vortex.ui.views.CustomFontTextView
+
+            android:id="@+id/tvTicketDate"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_toLeftOf="@+id/badge"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/grey"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTicketDescription"
+            android:text="Title goes here"
+            android:visibility="visible"
+            customfontdemo:fontName="@string/font_title_bold"/>
+
+
+        <LinearLayout
+            android:layout_above="@+id/bottom"
+            android:id="@+id/badge"
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/timestamp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvEventTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginBottom="00dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="0dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="0dp"
+                android:text="12:00"
+                android:textColor="#ffffff"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginBottom="00dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="0dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="0dp"
+                android:text="PM"
+                android:textColor="#f9b38c"
+                android:textSize="14dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:id="@+id/bottom"
+            android:layout_below="@+id/icon"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tickets_background"/>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

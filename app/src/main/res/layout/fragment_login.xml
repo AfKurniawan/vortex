@@ -64,6 +64,7 @@
                   android:textSize="16dip"/>
 
         <TextView
+            android:visibility="gone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -72,7 +73,7 @@
             android:textSize="16dip"/>
 
         <LinearLayout
-
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

@@ -10,17 +10,37 @@ public class Ticket implements Serializable {
     private String amount;
     private String totalAvailable;
     private String type;
-    private String currencyCode;
-    private int eventId;
-    private int ticketId;
-    private String dealine;
 
-    public String getDealine() {
-        return dealine;
+    public String getEvent_id() {
+        return event_id;
     }
 
-    public void setDealine(String dealine) {
-        this.dealine = dealine;
+    public void setEvent_id(String event_id) {
+        this.event_id = event_id;
+    }
+
+    public String getTicket_id() {
+        return ticket_id;
+    }
+
+    public void setTicket_id(String ticket_id) {
+        this.ticket_id = ticket_id;
+    }
+
+    private String currencyCode;
+
+
+
+    private String event_id;
+    private String ticket_id;
+    private String deadline;
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public String getAmount() {
@@ -55,19 +75,5 @@ public class Ticket implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    public int getEventId() {
-        return eventId;
-    }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-
-    public int getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(int ticketId) {
-        this.ticketId = ticketId;
-    }
 }

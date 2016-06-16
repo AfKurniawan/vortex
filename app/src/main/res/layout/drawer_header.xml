@@ -197,7 +197,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/drawer_notifications"
+                    android:src="@drawable/drawer_venues"
                 />
 
                 <TextView
@@ -260,6 +260,49 @@
                 />
             </LinearLayout>
         </com.balysv.materialripple.MaterialRippleLayout>
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/rvDrawer_tickets"
+            app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="#585858"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleOverlay="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:layout_marginTop="0dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/drawer_ticket"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="left"
+                    android:text="My Tickets"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                />
+            </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
         <!--<com.andexert.library.RippleView-->
             <!--rv_color="@color/grey"-->
@@ -305,7 +348,7 @@
                     <!--android:layout_marginRight="10dp"-->
                     <!--android:layout_marginTop="16dp"-->
                     <!--android:gravity="left"-->
-                    <!--android:text="Manage My Artists"-->
+                    <!--android:ticketType="Manage My Artists"-->
                     <!--android:textColor="@color/black"-->
                     <!--android:textSize="14sp"-->
                     <!--android:textStyle="bold"-->

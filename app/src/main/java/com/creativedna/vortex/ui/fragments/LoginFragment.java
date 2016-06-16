@@ -18,18 +18,11 @@ import android.widget.Toast;
 
 import com.creativedna.vortex.R;
 import com.creativedna.vortex.constants.AppConstants;
-import com.creativedna.vortex.helpers.FbConnectHelper;
-import com.creativedna.vortex.helpers.GooglePlusSignInHelper;
 import com.creativedna.vortex.helpers.SharedPreferenceManager;
 import com.creativedna.vortex.models.UserModel;
 import com.creativedna.vortex.ui.activities.LandingPage;
 import com.creativedna.vortex.ui.activities.LoginActivity;
 import com.creativedna.vortex.ui.activities.SignupActivity;
-import com.facebook.GraphResponse;
-import com.facebook.internal.ImageRequest;
-import com.facebook.internal.ImageResponse;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +31,6 @@ import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -48,7 +40,8 @@ import okhttp3.Response;
 /**
  * Created by Bryan Lamtoo - creativeDNA (U) LTD.
  */
-public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignInListener, GooglePlusSignInHelper.OnGoogleSignInListener{
+public class LoginFragment extends Fragment{
+
     private static final String TAG = LoginFragment.class.getSimpleName();
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
@@ -60,9 +53,6 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
 
     @Bind(R.id.login_layout)
     LinearLayout view;
-
-    private FbConnectHelper fbConnectHelper;
-    private GooglePlusSignInHelper gSignInHelper;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -110,28 +100,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
             }
         });
 
-        setup();
-    }
-
-    private void setup() {
-
-        GooglePlusSignInHelper.setClientID(AppConstants.GOOGLE_CLIENT_ID);
-        gSignInHelper = GooglePlusSignInHelper.getInstance();
-        gSignInHelper.initialize(getActivity(), this);
-
-        fbConnectHelper = new FbConnectHelper(this,this);
-    }
-
-    @OnClick(R.id.login_google)
-    public void loginwithGoogle(View view) {
-        gSignInHelper.signIn(getActivity());
-        setBackground(R.color.g_color);
-    }
-
-    @OnClick(R.id.login_facebook)
-    public void loginwithFacebook(View view) {
-        fbConnectHelper.connect();
-        setBackground(R.color.fb_color);
+//        setup();
     }
 
 
@@ -153,94 +122,6 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
         view.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        fbConnectHelper.onActivityResult(requestCode, resultCode, data);
-        gSignInHelper.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void OnFbSuccess(GraphResponse graphResponse) {
-        UserModel userModel = getUserModelFromGraphResponse(graphResponse);
-        if(userModel!=null) {
-            SharedPreferenceManager.getSharedInstance().saveUserModel(userModel);
-            startHomeActivity(userModel);
-        }
-    }
-
-    private UserModel getUserModelFromGraphResponse(GraphResponse graphResponse)
-    {
-        UserModel userModel = new UserModel();
-        try {
-            JSONObject jsonObject = graphResponse.getJSONObject();
-            userModel.userName = jsonObject.getString("name");
-            userModel.userEmail = jsonObject.getString("email");
-            String id = jsonObject.getString("id");
-//            String profileImg = "http://graph.facebook.com/"+ id+ "/picture?type=large";
-            String profileImg = "http://pcwallart.com/images/generic-avatar-icon-wallpaper-2.jpg";
-
-            ImageRequest request = getImageRequest(id);
-            if (request != null) {
-                profileImg = request.getImageUri().toString();
-            }
-
-            userModel.profilePic = profileImg;
-            Log.i(TAG,profileImg);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return userModel;
-    }
-
-    private ImageRequest getImageRequest(String id) {
-        ImageRequest request = null;
-        ImageRequest.Builder requestBuilder = new ImageRequest.Builder(
-                getActivity(),
-                ImageRequest.getProfilePictureUri(id,
-                        getResources().getDimensionPixelSize(
-                                R.dimen.profileImageSize),
-                        getResources().getDimensionPixelSize(
-                                R.dimen.profileImageSize)));
-
-        request = requestBuilder.setCallerTag(this)
-                .setCallback(
-                        new ImageRequest.Callback() {
-                            @Override
-                            public void onCompleted(ImageResponse response) {
-
-                            }
-                        })
-                .build();
-        return request;
-    }
-    @Override
-    public void OnFbError(String errorMessage) {
-        resetToDefaultView(errorMessage);
-    }
-
-    @Override
-    public void OnGSignSuccess(GoogleSignInAccount acct) {
-        UserModel userModel = new UserModel();
-        userModel.userName = (acct.getDisplayName()==null)?"":acct.getDisplayName();
-        userModel.userEmail = acct.getEmail();
-
-        Uri photoUrl = acct.getPhotoUrl();
-        if(photoUrl!=null)
-            userModel.profilePic = photoUrl.toString();
-        else
-            userModel.profilePic = "";
-        Log.i(TAG, acct.getIdToken());
-
-        SharedPreferenceManager.getSharedInstance().saveUserModel(userModel);
-        startHomeActivity(userModel);
-    }
-
-    @Override
-    public void OnGSignError(GoogleSignInResult errorMessage) {
-        resetToDefaultView("Google Sign in error");
-    }
 
     private void startHomeActivity(UserModel userModel)
     {
@@ -258,11 +139,7 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
             onLoginFailed();
             return;
         }
-
         _loginButton.setEnabled(false);
-
-
-
         progressDialog.show();
 
         String email = _emailText.getText().toString();
@@ -270,8 +147,6 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
        new LoginAsync().execute(email, password);
 
     }
-
-
 
         class LoginAsync extends AsyncTask<String, Void, String> {
             @Override
@@ -341,12 +216,15 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
             JSONObject json = new JSONObject(result);
             String username = json.getString("name");
             String email = json.getString("email");
+            String userID = json.getString("id");
 
             UserModel userModel = new UserModel();
             userModel.userName = username;
             userModel.userEmail = email;
+            userModel.userID = userID;
 
             Uri photoUrl = null;
+
             if(photoUrl!=null)
                 userModel.profilePic = photoUrl.toString();
             else
@@ -361,10 +239,8 @@ public class LoginFragment extends Fragment implements FbConnectHelper.OnFbSignI
     }
 
     public void onLoginFailed() {
-
      Toast.makeText(getActivity(), "Login failed, check your credentials", Toast.LENGTH_LONG)
                 .show();
-
         _loginButton.setEnabled(true);
     }
 

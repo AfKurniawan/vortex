@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class UserModel implements Parcelable {
 
+    public String userID;
     public String userName;
     public String userEmail;
     public String profilePic;
@@ -33,6 +34,7 @@ public class UserModel implements Parcelable {
         userName = parcel.readString();
         userEmail = parcel.readString();
         profilePic = parcel.readString();
+        userID = parcel.readString();
     }
 
 
@@ -41,6 +43,7 @@ public class UserModel implements Parcelable {
         parcel.writeString(userName);
         parcel.writeString(userEmail);
         parcel.writeString(profilePic);
+        parcel.writeString(userID);
     }
 
     @Override

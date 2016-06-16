@@ -232,6 +232,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         if (event.getTickets() != null && event.getTickets().size()>0) {
 
             showTickets();
+
         }else {
             mTicketsProgress.setVisibility(ProgressBar.GONE);
             emptyEventTicketsIndicator.setVisibility(TextView.VISIBLE);
@@ -495,7 +496,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     + " "
                     + event.getVenue().getUrl();
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
+            intent.setType("ticketType/plain");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             intent.putExtra(Intent.EXTRA_TEXT, body);
             startActivity(Intent.createChooser(intent, "Share event"));

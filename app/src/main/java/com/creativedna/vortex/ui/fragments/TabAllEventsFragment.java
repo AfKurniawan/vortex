@@ -56,6 +56,7 @@ public class TabAllEventsFragment extends Fragment {
     TextView tryAgain;
     AllEventsAdapter allEventsAdapter;
     ArrayList<Event> events;
+
     public TabAllEventsFragment() {
         // Required empty public constructor
     }
@@ -73,10 +74,24 @@ public class TabAllEventsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         events = new ArrayList<>();
+        popularRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        allEventsAdapter = new AllEventsAdapter(events, getContext());
+        popularRecycler.setAdapter(allEventsAdapter);
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(allEventsAdapter);
+        popularRecycler.addItemDecoration(headersDecor);
+        popularRecycler.addItemDecoration(new DividerDecoration(getActivity()));
+        allEventsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                headersDecor.invalidateHeaders();
+            }
+        });
+
         //addDummyEvents();
         getEvents();
 
-       // events();
+        // events();
         return view;
     }
 
@@ -110,7 +125,7 @@ public class TabAllEventsFragment extends Fragment {
 
                         Log.d("getting events...", "Completed");
 
-                        Log.d("JSON SIZE",""+events.size());
+                        Log.d("JSON SIZE", "" + events.size());
                     }
 
                     @Override
@@ -127,21 +142,10 @@ public class TabAllEventsFragment extends Fragment {
 
                     @Override
                     public void onNext(EventCallback eventCallback) {
+                        events.clear();
+                        events.addAll(eventCallback.getEvents());
+                        allEventsAdapter.notifyDataSetChanged();
 
-                        events = eventCallback.getEvents();
-                        popularRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        allEventsAdapter = new AllEventsAdapter(events, getContext());
-                        popularRecycler.setAdapter(allEventsAdapter);
-                        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(allEventsAdapter);
-                        popularRecycler.addItemDecoration(headersDecor);
-                        popularRecycler.addItemDecoration(new DividerDecoration(getActivity()));
-                        allEventsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                            @Override
-                            public void onChanged() {
-                                super.onChanged();
-                                headersDecor.invalidateHeaders();
-                            }
-                        });
                     }
                 });
     }
@@ -168,6 +172,7 @@ public class TabAllEventsFragment extends Fragment {
                                 Event event = entity.getData();
                                 events.add(entity.getData());
                             }
+
                             allEventsAdapter.notifyDataSetChanged();
                             //getEvents();
                         }
@@ -197,4 +202,10 @@ public class TabAllEventsFragment extends Fragment {
         //events();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        events();
+    }
 }

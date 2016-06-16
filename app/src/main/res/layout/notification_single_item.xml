@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customfontdemo="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:orientation="vertical"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_centerVertical="true"
+            app:civ_border_width="1dp"
+            android:layout_margin="20dp"
+
+            android:padding="30dp"
+            android:src="@drawable/ic_event_note"
+            android:id="@+id/icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"/>
+
+        <com.creativedna.vortex.ui.views.CustomFontTextView
+            android:layout_toLeftOf="@+id/badge"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/icon"
+            android:id="@+id/tvNotificationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title goes here"
+            android:textSize="18sp"
+            android:visibility="visible"
+            customfontdemo:fontName="@string/font_title_bold"/>
+
+        <com.creativedna.vortex.ui.views.CustomFontTextView
+            android:layout_toLeftOf="@+id/badge"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/icon"
+            android:id="@+id/tvNotificationDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNotificationName"
+            android:text="Title goes here"
+            android:visibility="visible"
+            customfontdemo:fontName="@string/font_title_bold"/>
+
+        <ImageView
+            android:layout_marginTop="-10dp"
+            android:id="@+id/badge"
+            android:rotation="0"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_bookmark"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

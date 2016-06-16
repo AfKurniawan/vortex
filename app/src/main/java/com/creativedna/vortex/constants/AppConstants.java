@@ -5,9 +5,11 @@ package com.creativedna.vortex.constants;
  */
 public class AppConstants {
 
+
     public enum SharedPreferenceKeys {
         USER_NAME("userName"),
         USER_EMAIL("userEmail"),
+        USER_ID("userID"),
         USER_IMAGE_URL("userImageUrl");
 
 
@@ -26,6 +28,7 @@ public class AppConstants {
     public static final String REGISTER_URL = "http://192.168.1.23/vortex/register.php";
     public static final String LOGIN_URL = "http://192.168.1.23/vortex/login.php";
     public static final String BASE_URL = "http://192.168.1.23/vortex/index.php/api/";
+    public static final String BOOKING_URL ="http://192.168.1.23/vortex/book.php" ;
 //
 //    String BASE_URL = "https://shmusicdev.herokuapp.com/api/v0/";
 

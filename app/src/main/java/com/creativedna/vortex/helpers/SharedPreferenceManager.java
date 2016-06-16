@@ -198,6 +198,7 @@ public class SharedPreferenceManager {
 
         setStringInPreferences(AppConstants.SharedPreferenceKeys.USER_NAME.getKey(), userModel.userName);
         setStringInPreferences(AppConstants.SharedPreferenceKeys.USER_EMAIL.getKey(), userModel.userEmail);
+        setStringInPreferences(AppConstants.SharedPreferenceKeys.USER_ID.getKey(), userModel.userID);
         setStringInPreferences(AppConstants.SharedPreferenceKeys.USER_IMAGE_URL.getKey(), userModel.profilePic);
     }
 
@@ -209,6 +210,8 @@ public class SharedPreferenceManager {
             userModel = new UserModel();
             userModel.userName = name;
             userModel.userEmail = getStringFromPreferances(AppConstants.SharedPreferenceKeys.USER_EMAIL.getKey());
+            userModel.userID = getStringFromPreferances(AppConstants.SharedPreferenceKeys
+                    .USER_ID.getKey());
             userModel.profilePic = getStringFromPreferances(AppConstants.SharedPreferenceKeys.USER_IMAGE_URL.getKey());
 
         }
